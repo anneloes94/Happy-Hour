@@ -9,3 +9,4 @@ CREATE TABLE restaurants (
   end_time TIME,
   address TEXT
 );
+

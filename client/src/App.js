@@ -2,6 +2,27 @@ import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import { GOOGLE_API_KEY } from "./requests"
 import CurrentLocation from "./Map"
+import axios from "axios";
+
+ // [...] RETRIEVES DATA FROM THE API DATABASE
+  Promise.all([
+    Promise.resolve(axios.get("http://localhost:8080/api/customers")),
+    Promise.resolve(axios.get("http://localhost:8080/api/restaurants")),
+  ])
+    .then((all) => {
+      const customers = all[0].data
+      const restaurants = all[1].data
+      console.log(customers);
+    })
+    .catch(error =>
+      console.log(
+        "An error occurred while retrieving data from the database",
+        error
+      )
+    );
+
+
+
 
 const mapStyles = {
   width: '100%',
@@ -57,3 +78,5 @@ render() {
 export default GoogleApiWrapper({
   apiKey: GOOGLE_API_KEY
 })(MapContainer);
+
+

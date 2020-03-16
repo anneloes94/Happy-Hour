@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
-import { GOOGLE_API_KEY } from "./requests"
 import CurrentLocation from "./Map"
 import axios from "axios";
-import Script from 'react-load-script';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // import Search from "./components/SearchBar"
@@ -83,7 +81,7 @@ render() {
 }
 
 export default GoogleApiWrapper({
-  apiKey: GOOGLE_API_KEY
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY
 })(MapContainer);
 
 

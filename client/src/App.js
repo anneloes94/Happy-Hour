@@ -6,12 +6,13 @@ import Script from 'react-load-script';
 
 function App() {
   const [pins, addPin] = useState([]);
+  console.log(process.env)
   return (
   <MuiThemeProvider> 
+  <script url={`https://maps.googleapis.com/maps/api/js?key=${ process.env.REACT_APP_GOOGLE_API_KEYTWO}&libraries=places`}></script>  
     <Search addPin={addPin}/>  
     <MapContainer pins={pins}/>
   </MuiThemeProvider>)
-
 }
 
 // Search will give back a lng/lat, 

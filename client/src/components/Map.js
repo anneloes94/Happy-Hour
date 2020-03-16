@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Search from "./components/SearchBar"
 
 const mapStyles = {
   map: {
@@ -96,7 +95,6 @@ export class CurrentLocation extends React.Component {
     const style = Object.assign({}, mapStyles.map);
    return (
      <div>
-       <Search city="Toronto" query="Toronto, ON, Canada" onChange={this.state.search}/>
        <div style={style} ref="map">
          Loading map...
        </div>

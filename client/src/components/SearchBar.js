@@ -38,6 +38,24 @@ class Search extends Component {
                                   this.handlePlaceSelect); 
   }
 
+  handlePlaceSelect = () => {
+
+    // Extract City From Address Object
+    const addressObject = this.autocomplete.getPlace();
+    const address = addressObject.address_components;
+
+    // Check if address is valid
+    if (address) {
+      // Set State
+      this.setState(
+        {
+          city: address[0].long_name,
+          query: addressObject.formatted_address,
+        }
+      );
+    }
+  }
+
   render() {
     return (
       <div>

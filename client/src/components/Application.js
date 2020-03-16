@@ -1,19 +1,8 @@
-// import React from "react";
-
-
-// export default function Application(props) {
-
-//   return (
-//     <div>
-//     <h1>Hello</h1>
-//     </div>
-//   )
-// } 
-
-
 import React from "react";
 import { compose, withProps } from "recompose";
 import { GOOGLE_API_KEY } from "../requests";
+import Search from "./SearchBar"
+
 
 import {
   withGoogleMap,

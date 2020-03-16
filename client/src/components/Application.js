@@ -1,8 +1,5 @@
 import React from "react";
 import { compose, withProps } from "recompose";
-import { GOOGLE_API_KEY } from "../requests";
-import Search from "./SearchBar"
-
 
 import {
   withGoogleMap,
@@ -17,7 +14,7 @@ const lng = -79.402260;
 const MapComponent = compose(
 
   withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${ GOOGLE_API_KEY }&v=3.exp&libraries=geometry,drawing,places`,
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${ process.env.REACT_APP_GOOGLE_API_KEY }&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,

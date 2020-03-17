@@ -65,16 +65,13 @@ export class MapContainer extends Component {
       });
     }
   };
-  
-  // restaurantMarkers = this.state.restaurants.map(restaurant => <Marker onClick={this.onMarkerClick} name={restaurant.name} /> )
 
   render() {
     return (
       <MuiThemeProvider>
-          {JSON.stringify(this.state.restaurants.length)}
         <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
           
-          {this.state.restaurants.map( restaurant => <Marker title={restaurant.name} name={restaurant.name} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
+          {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} title={restaurant.name} name={restaurant.name} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
 
           <InfoWindow
             marker={this.state.activeMarker}

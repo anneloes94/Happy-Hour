@@ -22,6 +22,5 @@ INSERT INTO restaurants (name, customer_id, start_time, end_time, address) VALUE
 INSERT INTO restaurants (name, customer_id, start_time, end_time, address) VALUES ('Famoso Neapolitan Pizza', 2, '00:15:00', '00:18:00', '386 Bloor St W, Toronto, ON M5S 1X4' );
 
 
-INSERT INTO restaurants (name, customer_id, start_time, end_time, address) VALUES ('Famoso Neapolitan Pizza', 2, '00:15:00', '00:18:00', '386 Bloor St W, Toronto, ON M5S 1X4' );
 
 

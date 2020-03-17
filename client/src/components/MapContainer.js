@@ -1,39 +1,54 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 
 
-// [...] RETRIEVES DATA FROM THE API DATABASE
-Promise.all([
-  Promise.resolve(axios.get("http://localhost:8080/api/customers")),
-  Promise.resolve(axios.get("http://localhost:8080/api/restaurants"))
-])
-  .then(all => {
-    const customers = all[0].data;
-    const restaurants = all[1].data;
-    console.log(customers);
-    console.log(restaurants)
-  })
-  .catch(error =>
-    console.log(
-      "An error occurred while retrieving data from the database",
-      error
-    )
-  );
-
-// const mapStyles = {
-//   width: "100%",
-//   height: "100%"
-// };
 
 export class MapContainer extends Component {
-  state = {
-    showingInfoWindow: false, //Hides or shows the infoWindow
-    activeMarker: {}, //Shows the active marker upon click
-    selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
-  };
+  // [...] RETRIEVES DATA FROM THE API DATABASE
+  // on componentLoad load data into state
+  // use componentDidMount
+  // when comopnent is loaded up onto the browser, it will grab the data then
+  constructor(props) {
+    super(props);
+    this.state = {
+      showingInfoWindow: false, //Hides or shows the infoWindow
+      activeMarker: {}, //Shows the active marker upon click
+      selectedPlace: {}, //Shows the infoWindow to the selected place upon a marker
+      restaurants: []
+    };
+  }
+
+  componentDidMount() {
+    
+    const customersData = axios.get("http://localhost:8080/api/customers");
+    const restaurantsData = axios.get("http://localhost:8080/api/restaurants");
+    // trackPromise(
+    Promise.all([customersData, restaurantsData])
+      .then(all => {
+        console.log(all[1].data.restaurants)
+        let r =  [...all[1].data.restaurants];
+        console.log("r ", r);
+        this.setState( prev => {
+          // customers: all[0].data,
+          // restaurants: [...all[1].data.restaurants]
+          console.log("prev", prev)
+          return {
+            ...prev,
+            restaurants: r,
+          }
+        });
+      })
+      .catch(error => {
+        console.log(
+          "An error occurred while retrieving data from the database",
+          error
+        );
+      })
+    }
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
@@ -50,11 +65,17 @@ export class MapContainer extends Component {
       });
     }
   };
+  
+  // restaurantMarkers = this.state.restaurants.map(restaurant => <Marker onClick={this.onMarkerClick} name={restaurant.name} /> )
+
   render() {
     return (
       <MuiThemeProvider>
+          {JSON.stringify(this.state.restaurants.length)}
         <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-          <Marker onClick={this.onMarkerClick} name={"Lighthouse Labs"} />
+          
+          {this.state.restaurants.map( restaurant => <Marker title={restaurant.name} name={restaurant.name} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
+
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}

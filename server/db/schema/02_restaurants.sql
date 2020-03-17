@@ -7,6 +7,8 @@ CREATE TABLE restaurants (
   name VARCHAR(255) NOT NULL,
   start_time TIME,
   end_time TIME,
-  address TEXT
+  address TEXT,
+  lat DECIMAL(8,6),
+  lng DECIMAL(8,6)
 );
 

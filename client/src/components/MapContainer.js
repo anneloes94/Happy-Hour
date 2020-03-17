@@ -69,21 +69,13 @@ export class MapContainer extends Component {
   // restaurantMarkers = this.state.restaurants.map(restaurant => <Marker onClick={this.onMarkerClick} name={restaurant.name} /> )
 
   render() {
-    console.log(this.state.restaurants.length)
     return (
       <MuiThemeProvider>
           {JSON.stringify(this.state.restaurants.length)}
         <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
           
-          {/* {(this.state.restaurants.length > 0) ? (this.restaurantMarkers) : ( <Marker onClick={this.onMarkerClick} name="Lighthouse Labs" /> )} */}
-          {/* <Marker location={lat: }onClick={this.onMarkerClick} name="Lighthouse Labs" /> */}
           {this.state.restaurants.map( restaurant => <Marker title={restaurant.name} name={restaurant.name} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
-          //
-          <Marker
-            title={'The marker`s title will appear as a tooltip.'}
-            name={'SOMA'}
-            position={{lat: 37.778519, lng: -122.405640}}
-          />
+
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}

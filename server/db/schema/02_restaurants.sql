@@ -8,7 +8,7 @@ CREATE TABLE restaurants (
   start_time TIME,
   end_time TIME,
   address TEXT,
-  lat INTEGER,
-  lng INTEGER
+  lat DECIMAL(8,6),
+  lng DECIMAL(8,6)
 );
 

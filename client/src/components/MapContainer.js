@@ -3,6 +3,9 @@ import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+
+
 
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
@@ -17,17 +20,26 @@ export class MapContainer extends Component {
       selectedPlace: {}, //Shows the infoWindow to the selected place upon a marker
       restaurants: []
     };
-    console.log(this.state.restaurants);
   }
 
   componentDidMount() {
+    
     const customersData = axios.get("http://localhost:8080/api/customers");
     const restaurantsData = axios.get("http://localhost:8080/api/restaurants");
+    // trackPromise(
     Promise.all([customersData, restaurantsData])
       .then(all => {
-        this.setState({
-          customers: all[0].data,
-          restaurants: all[1].data
+        console.log(all[1].data.restaurants)
+        let r =  [...all[1].data.restaurants];
+        console.log("r ", r);
+        this.setState( prev => {
+          // customers: all[0].data,
+          // restaurants: [...all[1].data.restaurants]
+          console.log("prev", prev)
+          return {
+            ...prev,
+            restaurants: r,
+          }
         });
       })
       .catch(error => {
@@ -35,8 +47,8 @@ export class MapContainer extends Component {
           "An error occurred while retrieving data from the database",
           error
         );
-      });
-  }
+      })
+    }
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
@@ -54,15 +66,24 @@ export class MapContainer extends Component {
     }
   };
   
-  // restaurantMarkers = this.state.restaurants.map(restaurant => { <Marker onClick={this.onMarkerClick} name={restaurant.name} /> })
+  // restaurantMarkers = this.state.restaurants.map(restaurant => <Marker onClick={this.onMarkerClick} name={restaurant.name} /> )
 
   render() {
+    console.log(this.state.restaurants.length)
     return (
       <MuiThemeProvider>
+          {JSON.stringify(this.state.restaurants.length)}
         <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-          {this.state.restaurants.length > 0 ? console.log("hello") : console.log("fail")}
-          {/* {(this.state.restaurants.length > 0) ? (this.restaurantMarkers) : ( <Marker onClick={this.onMarkerClick} name="Lighthouse Labs" /> )} */}
           
+          {/* {(this.state.restaurants.length > 0) ? (this.restaurantMarkers) : ( <Marker onClick={this.onMarkerClick} name="Lighthouse Labs" /> )} */}
+          {/* <Marker location={lat: }onClick={this.onMarkerClick} name="Lighthouse Labs" /> */}
+          {this.state.restaurants.map( restaurant => <Marker title={restaurant.name} name={restaurant.name} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
+          //
+          <Marker
+            title={'The marker`s title will appear as a tooltip.'}
+            name={'SOMA'}
+            position={{lat: 37.778519, lng: -122.405640}}
+          />
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}

@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 const mapStyles = {
   map: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%'
+    position: "absolute",
+    width: "100%",
+    height: "100%"
   }
 };
 
@@ -93,16 +93,15 @@ export class CurrentLocation extends React.Component {
 
   render() {
     const style = Object.assign({}, mapStyles.map);
-   return (
-     <div>
-       <div style={style} ref="map">
-         Loading map...
-       </div>
-       {this.renderChildren()}
-     </div>
-   );
- }
-
+    return (
+      <div>
+        <div style={style} ref="map">
+          Loading map...
+        </div>
+        {this.renderChildren()}
+      </div>
+    );
+  }
 
   constructor(props) {
     super(props);
@@ -112,11 +111,11 @@ export class CurrentLocation extends React.Component {
       currentLocation: {
         lat: lat,
         lng: lng
-      }, search: ""
+      },
+      search: ""
     };
   }
 }
-
 
 export default CurrentLocation;
 

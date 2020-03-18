@@ -3,7 +3,7 @@ import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
+import img  from "./Photos/local_bar-24px.svg";
 
 
 export class MapContainer extends Component {
@@ -20,6 +20,7 @@ export class MapContainer extends Component {
       restaurants: []
     };
   }
+// Need to put an api call to restaurants to show all markers on screen initially, but importing from marker file
 
   componentDidMount() {
     
@@ -68,23 +69,22 @@ export class MapContainer extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-          
-          {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} title={restaurant.name} name={restaurant.name} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
-
-          <InfoWindow
-            marker={this.state.activeMarker}
-            visible={this.state.showingInfoWindow}
-            onClose={this.onClose}
-          >
-            <div>
-              <h4>{this.state.selectedPlace.name}</h4>
-            </div>
-          </InfoWindow>
-        </CurrentLocation>
-      </MuiThemeProvider>
-    );
-  }
+`        <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
+         {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} icon={img} title={restaurant.name} name={restaurant.name} start_time={restaurant.start_time} end_time={restaurant.end_time} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+          onClose={this.onClose}
+        >
+          <div>
+          <h4>{this.state.selectedPlace.name}</h4>
+          <h5>{this.state.selectedPlace.start_time} - {this.state.selectedPlace.end_time}</h5>
+          </div>`
+        </InfoWindow>
+      </CurrentLocation>
+    </MuiThemeProvider>
+  );
+}
 }
 
 export default GoogleApiWrapper({

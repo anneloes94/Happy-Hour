@@ -5,6 +5,7 @@ import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import img  from "./Photos/local_bar-24px.svg";
 
+
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
   // on componentLoad load data into state

@@ -1,36 +1,33 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
-// import MuiAppBar from '@material-ui/core/AppBar';
-
-
-// npm install  @material-ui/core
-
-// const styles = theme => ({
-//   root: {
-//     color: theme.palette.common.white,
-//   },
-// });
-
-// function AppBar(props) {
-//   return <MuiAppBar   {...props} />;
-// }
-
-// AppBar.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// export default withStyles(styles)(AppBar);
-
 import React from "react";
 import ReactDOM from "react-dom";
-import AppBar from "@material-ui/core/Button";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button
+} from "@material-ui/core/";
+import { Menu } from "@material-ui/icons";
 
-export default function App() {
+export default function App(classes) {
   return (
-    <AppBar> Hello
-      </ AppBar >
-      )
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="menu"
+        >
+          <Menu />
+        </IconButton>
+        <Typography variant="h6" className={classes.title}>
+          HappyHour
+        </Typography>
+        <Button color="inherit">Login</Button>
+      </Toolbar>
+    </AppBar>
+  );
 }
 
 // ReactDOM.render(<App />, document.querySelector("#app"));

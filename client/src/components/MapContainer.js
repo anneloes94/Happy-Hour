@@ -3,7 +3,7 @@ import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import { img } from "./Photos/local_bar-24px.svg";
+import img  from "./Photos/local_bar-24px.svg";
 
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
@@ -69,7 +69,7 @@ export class MapContainer extends Component {
     return (
       <MuiThemeProvider>
 `        <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-         {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} title={restaurant.name} name={restaurant.name} start_time={restaurant.start_time} end_time={restaurant.end_time} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
+         {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} icon={img} title={restaurant.name} name={restaurant.name} start_time={restaurant.start_time} end_time={restaurant.end_time} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}

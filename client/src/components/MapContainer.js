@@ -3,7 +3,6 @@ import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 
 
 

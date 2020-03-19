@@ -3,13 +3,14 @@ import MapContainer from "./components/MapContainer";
 import Search from "./components/SearchBar";
 import AppBar from "./components/NavBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import ResponsiveDrawer from "./components/NavBar";
 
 function App() {
   const [pins, addPin] = useState([]);
   return (
    
     <MuiThemeProvider>
-      <AppBar />
+      <ResponsiveDrawer />
       <script
         url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEYTWO}&libraries=places`}
       ></script>

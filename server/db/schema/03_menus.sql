@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS menus CASCADE;
+
+CREATE TABLE menus (
+  id SERIAL PRIMARY KEY NOT NULL,
+  restaurant_id INTEGER REFERENCES restaurants(id),
+  has_food BOOLEAN DEFAULT FALSE,
+  has_drink BOOLEAN DEFAULT FALSE
+);
+

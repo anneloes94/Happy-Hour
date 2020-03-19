@@ -1,8 +1,9 @@
+// HERE WE CREATE MAPCONTAINER
+// WE USE CURRENTLOCATION AND INFOWINDOW
 import React, { Component, useEffect } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import img from "./Photos/local_bar-24px.svg";
 
 const weekDays = {
@@ -19,7 +20,7 @@ export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
   // on componentLoad load data into state
   // use componentDidMount
-  // when comopnent is loaded up onto the browser, it will grab the data then
+  // when component is loaded up onto the browser, it will grab the data then
   constructor(props) {
     super(props);
     this.state = {
@@ -108,7 +109,6 @@ export class MapContainer extends Component {
                   ))}
               </ul>
             </div>
-            `
           </InfoWindow>
         </CurrentLocation>
     );

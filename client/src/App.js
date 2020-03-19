@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MapContainer from "./components/MapContainer";
 import Search from "./components/SearchBar";
-import AppBar from "./components/NavBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import ResponsiveDrawer from "./components/NavBar";
 

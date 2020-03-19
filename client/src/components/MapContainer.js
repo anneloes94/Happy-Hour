@@ -5,6 +5,7 @@ import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import img  from "./Photos/local_bar-24px.svg";
 
+const weekDays = {1:"Monday", 2:"Tuesday", 3:"Wednesday", 4:"Thursday", 5:"Friday", 6:"Saturday", 7:"Sunday"}
 
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
@@ -67,10 +68,11 @@ export class MapContainer extends Component {
   };
 
   render() {
+    console.log(this.state.restaurants)
     return (
       <MuiThemeProvider>
 `        <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-         {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} icon={img} title={restaurant.name} name={restaurant.name} start_time={restaurant.start_time} end_time={restaurant.end_time} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
+         {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} date_available={restaurant.date_available}icon={img} title={restaurant.name} name={restaurant.name} start_time={restaurant.start_time} end_time={restaurant.end_time} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
@@ -79,6 +81,7 @@ export class MapContainer extends Component {
           <div>
           <h4>{this.state.selectedPlace.name}</h4>
           <h5>{this.state.selectedPlace.start_time} - {this.state.selectedPlace.end_time}</h5>
+          <ul>{this.state.selectedPlace.date_available && this.state.selectedPlace.date_available.map(day => <li>{weekDays[day]}</li>)}</ul>
           </div>`
         </InfoWindow>
       </CurrentLocation>

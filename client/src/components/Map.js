@@ -1,3 +1,5 @@
+// HERE WE CREATE THE CURRENTLOCATION COMPONENT
+// WHICH LOADS THE MAP AND GIVES IT DEFAULT VALUES
 import React from "react";
 import ReactDOM from "react-dom";
 

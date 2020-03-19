@@ -68,10 +68,12 @@ export class MapContainer extends Component {
   };
 
   render() {
+    console.log(this.state.restaurants)
     return (
       <MuiThemeProvider>
 `        <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
          {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} date_available={restaurant.date_available} icon={img} title={restaurant.name} name={restaurant.name} start_time={restaurant.start_time} end_time={restaurant.end_time} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
+         {this.state.restaurants.map( restaurant => <Marker onClick={this.onMarkerClick} date_available={restaurant.date_available}icon={img} title={restaurant.name} name={restaurant.name} start_time={restaurant.start_time} end_time={restaurant.end_time} position={{lat: restaurant.lat, lng: restaurant.lng}}/>)}
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}

@@ -58,6 +58,7 @@ export class CurrentLocation extends React.Component {
       const mapRef = this.refs.map;
 
       // reference to the actual DOM element
+      // Important!
       const node = ReactDOM.findDOMNode(mapRef);
 
       let { zoom } = this.props;
@@ -67,7 +68,8 @@ export class CurrentLocation extends React.Component {
         {},
         {
           center: center,
-          zoom: zoom
+          zoom: zoom,
+          mapTypeControlOptions: { mapTypeIds: [] }
         }
       );
 
@@ -122,9 +124,10 @@ export default CurrentLocation;
 CurrentLocation.defaultProps = {
   zoom: 14,
   initialCenter: {
-    lat: 43.644027,
-    lng: -79.40217
+    lat: 43.644262,
+    lng: -79.402261
   },
   centerAroundCurrentLocation: false,
-  visible: true
+  visible: true,
+  mapTypeControlOptions: { mapTypeIds: [] }
 };

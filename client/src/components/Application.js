@@ -7,8 +7,9 @@ import {
   withScriptjs
 } from "react-google-maps";
 
-const lat = 43.64426;
-const lng = -79.40226;
+
+const lat = 43.644262;
+const lng = -79.402261;
 
 const MapComponent = compose(
   withProps({

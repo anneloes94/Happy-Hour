@@ -9,7 +9,6 @@ function App() {
   return (
    
     <MuiThemeProvider>
-      <ResponsiveDrawer />
       <script
         url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEYTWO}&libraries=places`}
       ></script>

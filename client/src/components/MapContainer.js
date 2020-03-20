@@ -4,6 +4,7 @@ import React, { Component, useEffect } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
+import Checkbox from "./Checkbox";
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
 
@@ -16,6 +17,8 @@ const weekDays = {
   6: "Saturday",
   7: "Sunday"
 };
+
+
 
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
@@ -56,13 +59,14 @@ export class MapContainer extends Component {
       });
   }
 
-  onMarkerClick = (props, marker, e) =>
+  onMarkerClick = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
 
+  }
   onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -78,6 +82,7 @@ export class MapContainer extends Component {
         
         <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
           <Search />
+          <Checkbox />
           {this.state.restaurants.map(restaurant => (
             <Marker
               onClick={this.onMarkerClick}
@@ -116,5 +121,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_API_KEY
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(MapContainer);

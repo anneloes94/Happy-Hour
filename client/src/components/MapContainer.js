@@ -4,8 +4,9 @@ import React, { Component, useEffect } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
-import img from "./Photos/local_bar-24px.svg";
 import Checkbox from "./Checkbox";
+import barIcon from "./Photos/local_bar-24px.svg";
+import Search from "./SearchBar";
 
 const weekDays = {
   1: "Monday",
@@ -30,7 +31,8 @@ export class MapContainer extends Component {
       showingInfoWindow: false, //Hides or shows the infoWindow
       activeMarker: {}, //Shows the active marker upon click
       selectedPlace: {}, //Shows the infoWindow to the selected place upon a marker
-      restaurants: []
+      restaurants: [],
+      pins: []
     };
   }
   // Need to put an api call to restaurants to show all markers on screen initially, but importing from marker file
@@ -41,13 +43,8 @@ export class MapContainer extends Component {
     // trackPromise(
     Promise.all([customersData, restaurantsData])
       .then(all => {
-        console.log(all[1].data.restaurants);
         let r = [...all[1].data.restaurants];
-        console.log("r ", r);
         this.setState(prev => {
-          // customers: all[0].data,
-          // restaurants: [...all[1].data.restaurants]
-          console.log("prev", prev);
           return {
             ...prev,
             restaurants: r
@@ -80,15 +77,17 @@ export class MapContainer extends Component {
   };
 
   render() {
-    console.log(this.state.restaurants);
     return (
+      <div>
+        
         <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-        <Checkbox />
+          <Search />
+          <Checkbox />
           {this.state.restaurants.map(restaurant => (
             <Marker
               onClick={this.onMarkerClick}
               date_available={restaurant.date_available}
-              icon={img}
+              icon={barIcon}
               title={restaurant.name}
               name={restaurant.name}
               start_time={restaurant.start_time}
@@ -116,6 +115,7 @@ export class MapContainer extends Component {
             </div>
           </InfoWindow>
         </CurrentLocation>
+      </div>
     );
   }
 }

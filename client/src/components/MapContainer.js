@@ -7,7 +7,6 @@ import axios from "axios";
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
 
-
 const weekDays = {
   1: "Monday",
   2: "Tuesday",

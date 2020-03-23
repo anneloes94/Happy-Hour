@@ -22,13 +22,17 @@ export class CurrentLocation extends React.Component {
   }
 
   recenterMap() {
+    let current
+    if (this.props.currentLocation) {
+      current = this.props.currentLocation 
+    } else {
+      current = this.state.currentLocation;
+    }
     const map = this.map;
-    console.log(map)
-    const current = this.state.currentLocation;
 
     const google = this.props.google;
     const maps = google.maps;
-
+    console.log(current.lat);
     if (map) {
       let center = new maps.LatLng(current.lat, current.lng);
       map.panTo(center);
@@ -45,11 +49,13 @@ export class CurrentLocation extends React.Component {
               lat: coords.latitude,
               lng: coords.longitude
             }
-          });
+          },
+          this.recenterMap);
         });
       }
     }
     this.loadMap();
+    this.recenterMap();
   }
 
   loadMap() {
@@ -82,6 +88,7 @@ export class CurrentLocation extends React.Component {
   }
 
   renderChildren() {
+    this.recenterMap();
     const { children } = this.props;
 
     if (!children) return;
@@ -114,13 +121,13 @@ export class CurrentLocation extends React.Component {
     const { lat, lng } = this.props.initialCenter;
     
     this.state = {
+      // LHL coordinates
       currentLocation: {
         lat: lat,
         lng: lng
       },
       search: ""
     };
-    console.log(this.state, "map.js state")
   }
 }
 
@@ -128,6 +135,7 @@ export default CurrentLocation;
 
 CurrentLocation.defaultProps = {
   zoom: 14,
+  // FIX THIS TO GIVE ACTUAL CURRENT LOCATION
   initialCenter: {
     lat: 43.644262,
     lng: -79.402261

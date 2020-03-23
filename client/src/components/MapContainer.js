@@ -110,6 +110,7 @@ export class MapContainer extends Component {
         {/* HOW TO PASS IN MAPCONTAINER STATE TO CURRENTLOCATION? */}
         <CurrentLocation centerAroundCurrentLocation currentLocation={this.state.currentLocation} google={this.props.google}>
           <Search centerOnSearch={this.centerOnSearch} />
+          <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <Checkbox />
           {this.state.restaurants.map(restaurant => (
             <Marker

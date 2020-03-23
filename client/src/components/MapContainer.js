@@ -81,6 +81,7 @@ export class MapContainer extends Component {
       <div>
         
         <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
+        <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <Search />
           <Checkbox />
           {this.state.restaurants.map(restaurant => (

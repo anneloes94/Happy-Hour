@@ -5,6 +5,7 @@ import "react-google-places-autocomplete/dist/assets/index.css";
 import "./SearchBar.css"
 
 export default function Search(props) {
+
   return (
     <div className="searchBar">
       {/* More info: 
@@ -15,11 +16,11 @@ export default function Search(props) {
         componentRestrictions: {
           country: ["ca"]
         },
-        // location: selectedLocation,
-        // radius: Number,
+        // location: props.currentLocation,
+        // radius: 1500,
 
       }} 
-      onSelect={(selectedLocation) => this.setState({selectedPlace: selectedLocation})}
+      onSelect={(searchedLocation) => props.centerOnSearch(searchedLocation)}
       placeholder={"Where to..?"} />
     </div>
   );

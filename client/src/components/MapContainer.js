@@ -7,6 +7,10 @@ import axios from "axios";
 import Checkbox from "./Checkbox";
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
+import Geocode from "react-geocode";
+
+Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
+Geocode.setRegion("ca");
 
 const weekDays = {
   1: "Monday",
@@ -17,8 +21,6 @@ const weekDays = {
   6: "Saturday",
   7: "Sunday"
 };
-
-
 
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
@@ -65,8 +67,7 @@ export class MapContainer extends Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
-
-  }
+  };
   onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -76,13 +77,40 @@ export class MapContainer extends Component {
     }
   };
 
+  onFoodButtonClick = (props, marker, e) => {
+    this.setState({
+      selectedRestaurant: props
+    });
+  };
+  onDrinkButtonClick = (props, marker, e) => {
+    this.setState({
+      selectedRestaurant: props
+    });
+  };
+
+  centerOnSearch = (props, e) => {
+    Geocode.fromAddress(props.description)
+      .then(response => {
+        console.log(props)
+        const { lat, lng } = response.results[0].geometry.location;
+        this.setState({currentLocation: {lat, lng}})
+        console.log(this.state.currentLocation)
+        console.log(lat, lng);
+        // this.props.map.panTo({lat, lng})
+        // ** Need this to be passed to CurrentLocation ONCE a change of selecting from Search is made **
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   render() {
     return (
       <div>
-        
-        <CurrentLocation centerAroundCurrentLocation google={this.props.google}>
-        <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
-          <Search />
+        {/* HOW TO PASS IN MAPCONTAINER STATE TO CURRENTLOCATION? */}
+        <CurrentLocation centerAroundCurrentLocation currentLocation={this.state.currentLocation} google={this.props.google}>
+          <Search centerOnSearch={this.centerOnSearch} />
+          <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <Checkbox />
           {this.state.restaurants.map(restaurant => (
             <Marker
@@ -122,5 +150,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY
 })(MapContainer);

@@ -23,6 +23,7 @@ export class CurrentLocation extends React.Component {
 
   recenterMap() {
     const map = this.map;
+    console.log(map)
     const current = this.state.currentLocation;
 
     const google = this.props.google;
@@ -111,6 +112,7 @@ export class CurrentLocation extends React.Component {
     super(props);
 
     const { lat, lng } = this.props.initialCenter;
+    
     this.state = {
       currentLocation: {
         lat: lat,
@@ -118,6 +120,7 @@ export class CurrentLocation extends React.Component {
       },
       search: ""
     };
+    console.log(this.state, "map.js state")
   }
 }
 

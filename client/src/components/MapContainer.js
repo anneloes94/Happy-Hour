@@ -8,6 +8,8 @@ import Checkbox from "./Checkbox";
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
 import Geocode from "react-geocode";
+import FormGroup from '@material-ui/core/FormGroup';
+import "./Checkbox.css"
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -34,7 +36,9 @@ export class MapContainer extends Component {
       activeMarker: {}, //Shows the active marker upon click
       selectedPlace: {}, //Shows the infoWindow to the selected place upon a marker
       restaurants: [],
-      pins: []
+      pins: [],
+      showFood: true,
+      showDrink: true
     };
   }
   // Need to put an api call to restaurants to show all markers on screen initially, but importing from marker file
@@ -77,17 +81,6 @@ export class MapContainer extends Component {
     }
   };
 
-  onFoodButtonClick = (props, marker, e) => {
-    this.setState({
-      selectedRestaurant: props
-    });
-  };
-  onDrinkButtonClick = (props, marker, e) => {
-    this.setState({
-      selectedRestaurant: props
-    });
-  };
-
   centerOnSearch = (props, e) => {
     Geocode.fromAddress(props.description)
       .then(response => {
@@ -104,6 +97,72 @@ export class MapContainer extends Component {
       });
   };
 
+ markersToBeRendered(props){
+  const attributeData = this.state.restaurants.map(restaurant => 
+    <Marker 
+    date_available={restaurant.date_available}
+    icon={barIcon}
+    title={restaurant.name}
+    name={restaurant.name}
+    start_time={restaurant.start_time}
+    end_time={restaurant.end_time}
+    position={{ lat: restaurant.lat, lng: restaurant.lng }}/>
+  )
+}
+
+
+toggleShowFood = () => {
+    this.setState(prev => {
+      return {
+        ...prev,
+        showFood: !prev.showFood
+      }
+    })
+  }
+
+  toggleShowDrink = () => {
+    this.setState(prev => {
+      return {
+        ...prev,
+        showDrink: !prev.showDrink
+      }
+    })
+  }
+
+  showMarkers = () => {
+    console.log(this.state.showFood, this.state.showDrink);
+    if (this.state.showFood && this.state.showDrink) {
+      return this.state.restaurants.map(restaurant => 
+        <Marker
+        onClick={this.onMarkerClick}
+        date_available={restaurant.date_available}
+        icon={barIcon}
+        title={restaurant.name}
+        name={restaurant.name}
+        start_time={restaurant.start_time}
+        end_time={restaurant.end_time}
+        position={{ lat: restaurant.lat, lng: restaurant.lng }}
+        />)
+      }
+      else {
+        let filter = [];
+        filter = this.state.restaurants.filter(rest => rest.has_food === this.state.showFood && rest.has_drink === this.state.showDrink);
+        return filter.map(restaurant => 
+        <Marker
+          onClick={this.onMarkerClick}
+          date_available={restaurant.date_available}
+          icon={barIcon}
+          title={restaurant.name}
+          name={restaurant.name}
+          start_time={restaurant.start_time}
+          end_time={restaurant.end_time}
+          position={{ lat: restaurant.lat, lng: restaurant.lng }}
+        />)
+      }
+
+  }
+
+
   render() {
     return (
       <div>
@@ -111,19 +170,13 @@ export class MapContainer extends Component {
         <CurrentLocation centerAroundCurrentLocation currentLocation={this.state.currentLocation} google={this.props.google}>
           <Search centerOnSearch={this.centerOnSearch} />
           <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
-          <Checkbox />
-          {this.state.restaurants.map(restaurant => (
-            <Marker
-              onClick={this.onMarkerClick}
-              date_available={restaurant.date_available}
-              icon={barIcon}
-              title={restaurant.name}
-              name={restaurant.name}
-              start_time={restaurant.start_time}
-              end_time={restaurant.end_time}
-              position={{ lat: restaurant.lat, lng: restaurant.lng }}
-            />
-          ))}
+          <div className='form-check'>
+          <FormGroup row>
+            <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
+            <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
+          </FormGroup>
+          </div>
+          {this.state.restaurants && this.showMarkers()}
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}

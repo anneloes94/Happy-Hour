@@ -1,24 +1,40 @@
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import "./Checkbox.css"
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-export default function Checkboxes() {
+
+export default function Checkboxes(props) {
   const [checked, setChecked] = React.useState(true);
-  const handleChange = event => {
-    setChecked(event.target.checked);
-  };
+  // var restaurants = props.restaurants;
+  // const handleChange = event => {
+  //   setChecked(event.target.checked);
+  // };
+
+  // onFoodClick = (props, marker, e) => {
+  //   this.setState({
+  //     selectedRestaurant: props
+  //     restaurants.map(hasFood =>  )
+  //   });
+  // };
+
+  // onDrinkClick = (props, marker, e) => {
+  //   this.setState({
+  //     selectedRestaurant: props
+  //   });
+  // };
+
   return (
-    <div className='form-check'>
+    <FormControlLabel
+    control={
     <Checkbox
-        defaultChecked
+        checked = {props.checked}
         color="primary"
         inputProps={{ 'aria-label': 'secondary checkbox' }}
+        onChange={props.onClick}
       />
-    <Checkbox
-      defaultChecked
-      color="primary"
-      inputProps={{ 'aria-label': 'secondary checkbox' }}
+    }
+    label={props.label}
     />
-  </div>
   );
 }

@@ -22,6 +22,8 @@ const weekDays = {
   7: "Sunday"
 };
 
+const OPTIONS = ["Food", "Drink"];
+
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
   // on componentLoad load data into state
@@ -103,6 +105,17 @@ export class MapContainer extends Component {
         console.error(error);
       });
   };
+
+  createCheckboxes = () => OPTIONS.map(this.createCheckbox);
+
+  createCheckbox = option => (
+    <Checkbox
+      label={option}
+      isSelected={this.state.checkboxes[option]}
+      onCheckboxChange={this.handleCheckboxChange}
+      key={option}
+    />
+  );
 
   render() {
     return (

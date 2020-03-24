@@ -11,7 +11,7 @@ const router  = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
     let query = `
-    SELECT * FROM restaurants INNER JOIN menus ON restaurants.id = menus.restaurant_id;`
+    SELECT * FROM restaurants INNER JOIN menus ON restaurants.id = menus.restaurant_id ORDER BY restaurants.start_time;`
     console.log('query', query);
     db.query(query)
       .then(data => {

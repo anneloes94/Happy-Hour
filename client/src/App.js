@@ -1,18 +1,36 @@
 import React, { useState } from "react";
 import MapContainer from "./components/MapContainer";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import ResponsiveDrawer from "./components/NavBar";
+import NavBar from "./components/NavBar";
+import Login from "./components/Login"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const [pins, addPin] = useState([]);
   return (
-    <MuiThemeProvider>
-      <ResponsiveDrawer />
+    <Router>
+      <Switch>
+      <Route exact path="/">
+      <Login />
+      </Route>
+
+      <Route exact path="/map">
+      <MuiThemeProvider>
+      <NavBar />
       <script
         url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEYTWO}&libraries=places`}
-      ></script>
+      >
+      </script>
       <MapContainer pins={pins} />
-    </MuiThemeProvider>
+      </MuiThemeProvider>
+      </Route>
+      </Switch>
+    </Router>
   );
 }
 

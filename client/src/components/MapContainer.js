@@ -81,6 +81,48 @@ export class MapContainer extends Component {
     }
   };
 
+  // barCrawl = () => {
+  //   console.log()
+
+  // }
+  getDistance = () => {
+    //would it sort with the number format right now?
+    //right now start_time is a string
+    //2 options, add another table in db where start time is a int/decimal e.g. 00:16:00 is 4.00 
+    //or convert on client side from string to int and then filter 
+
+    // INPUT: restaurants
+    // OUTPUT: three LatLngs
+    // 0. restaurantsBarCrawl = []
+
+    // 1. SELECT * FROM restaurants ORDER BY start_time ASC
+    // DONE
+
+    // 2. Get GeoLocation from 
+        //this.state.currentLocation
+    // DONE
+    console.log(this.state)
+
+    // const currentLocation = this.state.currentLocation
+    navigator.geolocation.getCurrentPosition(location => {
+      const requestedRestaurants = axios.get(`http://localhost:8080/api/restaurants/test?lat=${location.latitude}&lng=${location.longitude}`)
+    .then(data => {
+      console.log(data)
+    })
+    })
+
+    // 3. Order this again, but filter out the closest bars
+      // say we have distance() method
+      // FOR EACH RESTAURANT
+      // we have A. this.state.currentLocation
+      //         B. restaurantLocation = {restaurant.lat, restaurant.lng}
+      // condition --> if distance(A, B) > 1.5
+      // 4. Make a triangle like calculation of shortest distance. NPM package?
+    //go to /restaurants/test and pass in the lat. long of where we currently are
+    
+    //43.659077, -79.439217 
+  }
+
   centerOnSearch = (props, e) => {
     Geocode.fromAddress(props.description)
       .then(response => {
@@ -130,7 +172,6 @@ toggleShowFood = () => {
   }
 
   showMarkers = () => {
-    console.log(this.state.showFood, this.state.showDrink);
     if (this.state.showFood && this.state.showDrink) {
       return this.state.restaurants.map(restaurant => 
         <Marker
@@ -159,7 +200,6 @@ toggleShowFood = () => {
           position={{ lat: restaurant.lat, lng: restaurant.lng }}
         />)
       }
-
   }
 
 
@@ -175,6 +215,7 @@ toggleShowFood = () => {
             <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
             <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
           </FormGroup>
+          <button onClick={this.getDistance} >button </button>
           </div>
           {this.state.restaurants && this.showMarkers()}
           <InfoWindow

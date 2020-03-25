@@ -1,35 +1,29 @@
 import React, { useState, Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./Login.css";
 import { Redirect } from 'react-router-dom'
+import "./Login.css"
 
-export default class Login extends Component {
-  state = {
-    redirect: false,
-    username:"LHLGrad",
-    password:"wedidit"
-  }
+export default function Login() {
+  const [redirect, setState] = useState(false);
   
-  setRedirect = () => {
-    // console.log(e.target.value);
-    this.setState({
+  const setRedirect = () => {
+    setState({
       redirect: true,
     })
-  }
+  };
 
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to='/map' />
+  const renderRedirect = () => {
+    if (redirect) {
+      return <Redirect to ="/map" />
     }
-  }
+  };
 
-    render() {
         return (
             <form>
                 <h3>Sign In</h3>
                 <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <label>Username</label>
+                    <input type="email" className="form-control" placeholder="Enter username" />
                 </div>
 
                 <div className="form-group">
@@ -44,12 +38,11 @@ export default class Login extends Component {
                     </div>
                 </div>
                 
-                {this.renderRedirect()}
-                <button onClick={this.setRedirect}>Submit</button>
+                {renderRedirect()}
+                <button onClick={setRedirect}>Submit</button>
                 <p className="forgot-password text-right">
                     Forgot <a href="#">password?</a>
                 </p>
             </form>
         );
-    }
-}
+};

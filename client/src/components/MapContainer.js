@@ -7,8 +7,10 @@ import axios from "axios";
 import Checkbox from "./Checkbox";
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
+import BarCrawlInfo from "./BarCrawlInfo"
 import Geocode from "react-geocode";
 import FormGroup from '@material-ui/core/FormGroup';
+import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
@@ -38,7 +40,8 @@ export class MapContainer extends Component {
       restaurants: [],
       pins: [],
       showFood: true,
-      showDrink: true
+      showDrink: true,
+      barCrawlRestaurants: []
     };
   }
   // Need to put an api call to restaurants to show all markers on screen initially, but importing from marker file
@@ -80,6 +83,62 @@ export class MapContainer extends Component {
       });
     }
   };
+
+  // barCrawl = () => {
+  //   console.log()
+
+  // }
+  getDistance = () => {
+    //would it sort with the number format right now?
+    //right now start_time is a string
+    //2 options, add another table in db where start time is a int/decimal e.g. 00:16:00 is 4.00 
+    //or convert on client side from string to int and then filter 
+
+    // INPUT: restaurants
+    // OUTPUT: three LatLngs
+    // 0. restaurantsBarCrawl = []
+
+    // 1. SELECT * FROM restaurants ORDER BY start_time ASC
+    // DONE
+
+    // 2. Get GeoLocation from 
+        //this.state.currentLocation
+    // DONE
+
+    // const currentLocation = this.state.currentLocation
+    navigator.geolocation.getCurrentPosition(location => {
+      axios.get(`http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`)
+    .then(result => {
+      const restaurantsArray = result.data.restaurants // array of objects
+
+      const filteredRestaurants = restaurantsArray.filter(restaurant => restaurant.distance <= 1.5 )
+
+      const slicedFilteredRestaurants = filteredRestaurants.slice(0,3)
+
+      this.setState(prev => {
+        return {
+          ...prev,
+          barCrawlRestaurants: slicedFilteredRestaurants
+        }
+      })
+
+      // if (this.state.barCrawlRestaurants) {
+      //   const barCrawlInfo = (
+      //     this.state.restaurants.map(restaurant => 
+      //     <div style="top-margin: 50px; background-color:white; position: absolute">
+      //       ${restaurant.name}
+      //       ${restaurant.start_time}
+      //       ${restaurant.end_time}
+      //       HELLO?
+      //     </div>)
+      //   )
+      //       console.log(barCrawlInfo)
+      //     return barCrawlInfo
+      //   }
+    })
+    })
+
+  }
 
   centerOnSearch = (props, e) => {
     Geocode.fromAddress(props.description)
@@ -130,7 +189,6 @@ toggleShowFood = () => {
   }
 
   showMarkers = () => {
-    console.log(this.state.showFood, this.state.showDrink);
     if (this.state.showFood && this.state.showDrink) {
       return this.state.restaurants.map(restaurant => 
         <Marker
@@ -159,22 +217,20 @@ toggleShowFood = () => {
           position={{ lat: restaurant.lat, lng: restaurant.lng }}
         />)
       }
-
   }
 
 
   render() {
     return (
-      <div>
+      <div >
         {/* HOW TO PASS IN MAPCONTAINER STATE TO CURRENTLOCATION? */}
         <CurrentLocation centerAroundCurrentLocation currentLocation={this.state.currentLocation} google={this.props.google}>
           <Search centerOnSearch={this.centerOnSearch} />
+          
           <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <div className='form-check'>
-          <FormGroup row>
-            <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
-            <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
-          </FormGroup>
+
+          
           </div>
           {this.state.restaurants && this.showMarkers()}
           <InfoWindow
@@ -197,6 +253,25 @@ toggleShowFood = () => {
             </div>
           </InfoWindow>
         </CurrentLocation>
+        <div style={{position: "absolute", top: "5em", right: "2em"}}>
+        <div >
+            {this.state.barCrawlRestaurants && this.state.barCrawlRestaurants.map(restaurant =>
+              <BarCrawlInfo 
+                name={restaurant.name}
+                address={restaurant.address}
+                start_time={restaurant.start_time}
+                end_time={restaurant.end_time} />
+            )}
+          </div>
+        
+          <FormGroup row>
+            <Button variant="contained" color="primary" onClick={this.getDistance}>
+              Find my Bar Crawl!
+            </Button>
+            <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
+            <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
+          </FormGroup>
+          </div>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import MapContainer from "./components/MapContainer";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login"
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Switch,

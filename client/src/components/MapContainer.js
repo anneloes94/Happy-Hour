@@ -7,8 +7,10 @@ import axios from "axios";
 import Checkbox from "./Checkbox";
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
+import BarCrawlInfo from "./BarCrawlInfo"
 import Geocode from "react-geocode";
 import FormGroup from '@material-ui/core/FormGroup';
+import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
@@ -38,7 +40,8 @@ export class MapContainer extends Component {
       restaurants: [],
       pins: [],
       showFood: true,
-      showDrink: true
+      showDrink: true,
+      barCrawlRestaurants: []
     };
   }
   // Need to put an api call to restaurants to show all markers on screen initially, but importing from marker file
@@ -104,33 +107,37 @@ export class MapContainer extends Component {
 
     // const currentLocation = this.state.currentLocation
     navigator.geolocation.getCurrentPosition(location => {
-      const requestedRestaurants = axios.get(`http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`)
+      axios.get(`http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`)
     .then(result => {
       const restaurantsArray = result.data.restaurants // array of objects
 
       const filteredRestaurants = restaurantsArray.filter(restaurant => restaurant.distance <= 1.5 )
+
       const slicedFilteredRestaurants = filteredRestaurants.slice(0,3)
 
-      console.log(slicedFilteredRestaurants)
+      this.setState(prev => {
+        return {
+          ...prev,
+          barCrawlRestaurants: slicedFilteredRestaurants
+        }
+      })
 
-      const restaurantsInfo = <div>
-        
-      </div>
-
-      return <div> hello </div>
+      // if (this.state.barCrawlRestaurants) {
+      //   const barCrawlInfo = (
+      //     this.state.restaurants.map(restaurant => 
+      //     <div style="top-margin: 50px; background-color:white; position: absolute">
+      //       ${restaurant.name}
+      //       ${restaurant.start_time}
+      //       ${restaurant.end_time}
+      //       HELLO?
+      //     </div>)
+      //   )
+      //       console.log(barCrawlInfo)
+      //     return barCrawlInfo
+      //   }
     })
     })
 
-    // 3. Order this again, but filter out the closest bars
-      // say we have distance() method
-      // FOR EACH RESTAURANT
-      // we have A. this.state.currentLocation
-      //         B. restaurantLocation = {restaurant.lat, restaurant.lng}
-      // condition --> if distance(A, B) > 1.5
-      // 4. Make a triangle like calculation of shortest distance. NPM package?
-    //go to /restaurants/test and pass in the lat. long of where we currently are
-    
-    //43.659077, -79.439217 
   }
 
   centerOnSearch = (props, e) => {
@@ -215,17 +222,15 @@ toggleShowFood = () => {
 
   render() {
     return (
-      <div>
+      <div >
         {/* HOW TO PASS IN MAPCONTAINER STATE TO CURRENTLOCATION? */}
         <CurrentLocation centerAroundCurrentLocation currentLocation={this.state.currentLocation} google={this.props.google}>
           <Search centerOnSearch={this.centerOnSearch} />
+          
           <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <div className='form-check'>
-          <FormGroup row>
-            <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
-            <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
-          </FormGroup>
-          <button onClick={this.getDistance} >button </button>
+
+          
           </div>
           {this.state.restaurants && this.showMarkers()}
           <InfoWindow
@@ -248,6 +253,25 @@ toggleShowFood = () => {
             </div>
           </InfoWindow>
         </CurrentLocation>
+        <div style={{position: "absolute", top: "5em", right: "2em"}}>
+        <div >
+            {this.state.barCrawlRestaurants && this.state.barCrawlRestaurants.map(restaurant =>
+              <BarCrawlInfo 
+                name={restaurant.name}
+                address={restaurant.address}
+                start_time={restaurant.start_time}
+                end_time={restaurant.end_time} />
+            )}
+          </div>
+        
+          <FormGroup row>
+            <Button variant="contained" color="primary" onClick={this.getDistance}>
+              Find my Bar Crawl!
+            </Button>
+            <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
+            <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
+          </FormGroup>
+          </div>
       </div>
     );
   }

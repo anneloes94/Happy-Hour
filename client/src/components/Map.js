@@ -22,9 +22,9 @@ export class CurrentLocation extends React.Component {
   }
 
   recenterMap() {
-    let current
+    let current;
     if (this.props.currentLocation) {
-      current = this.props.currentLocation 
+      current = this.props.currentLocation;
     } else {
       current = this.state.currentLocation;
     }
@@ -43,13 +43,15 @@ export class CurrentLocation extends React.Component {
       if (navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
           const coords = pos.coords;
-          this.setState({
-            currentLocation: {
-              lat: coords.latitude,
-              lng: coords.longitude
-            }
-          },
-          this.recenterMap);
+          this.setState(
+            {
+              currentLocation: {
+                lat: coords.latitude,
+                lng: coords.longitude
+              }
+            },
+            this.recenterMap
+          );
         });
       }
     }
@@ -104,6 +106,50 @@ export class CurrentLocation extends React.Component {
 
   render() {
     const style = Object.assign({}, mapStyles.map);
+    if (this.props.barCrawlRestaurants) {
+      const { google } = this.props;
+      const maps = google.maps;
+      const directionsService = new maps.DirectionsService();
+      const directionsRenderer = new maps.DirectionsRenderer();
+      const restaurants = this.props.barCrawlRestaurants;
+      const allButLastRestaurants = restaurants.slice(
+        0,
+        restaurants.length - 1
+      );
+      directionsRenderer.setMap(this.map);
+
+      if (restaurants.length > 0) {
+        let waypts = [];
+        const orgn = this.props.currentLocation || this.state.currentLocation;
+        const dest = restaurants[restaurants.length - 1].address;
+        allButLastRestaurants.map(restaurant => {
+          waypts.push({
+            location: restaurant.address,
+            stopover: true
+          });
+        });
+
+        directionsService.route(
+          {
+            origin: orgn,
+            destination: dest,
+            waypoints: waypts,
+            optimizeWaypoints: true,
+            travelMode: "DRIVING"
+          },
+          function(response, status) {
+            if (status === "OK") {
+              directionsRenderer.setDirections(response);
+              const route = response.routes[0];
+              console.log(route);
+            } else {
+              window.alert("Directions request failed due to " + status);
+            }
+          }
+        );
+      }
+    }
+
     return (
       <div>
         <div style={style} ref="map">
@@ -118,7 +164,7 @@ export class CurrentLocation extends React.Component {
     super(props);
 
     const { lat, lng } = this.props.initialCenter;
-    
+
     this.state = {
       // LHL coordinates
       currentLocation: {
@@ -134,7 +180,6 @@ export default CurrentLocation;
 
 CurrentLocation.defaultProps = {
   zoom: 14,
-  // FIX THIS TO GIVE ACTUAL CURRENT LOCATION
   initialCenter: {
     lat: 43.644262,
     lng: -79.402261

@@ -26,7 +26,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  router.get("/test", (req, res) => {
+  router.get("/distance", (req, res) => {
     console.log(req.query)
     let query = `
     SELECT *, (

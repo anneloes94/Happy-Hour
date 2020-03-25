@@ -101,13 +101,23 @@ export class MapContainer extends Component {
     // 2. Get GeoLocation from 
         //this.state.currentLocation
     // DONE
-    console.log(this.state)
 
     // const currentLocation = this.state.currentLocation
     navigator.geolocation.getCurrentPosition(location => {
-      const requestedRestaurants = axios.get(`http://localhost:8080/api/restaurants/test?lat=${location.latitude}&lng=${location.longitude}`)
-    .then(data => {
-      console.log(data)
+      const requestedRestaurants = axios.get(`http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`)
+    .then(result => {
+      const restaurantsArray = result.data.restaurants // array of objects
+
+      const filteredRestaurants = restaurantsArray.filter(restaurant => restaurant.distance <= 1.5 )
+      const slicedFilteredRestaurants = filteredRestaurants.slice(0,3)
+
+      console.log(slicedFilteredRestaurants)
+
+      const restaurantsInfo = <div>
+        
+      </div>
+
+      return <div> hello </div>
     })
     })
 

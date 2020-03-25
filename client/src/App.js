@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MapContainer from "./components/MapContainer";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import NavBar from "./components/NavBar";
@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [pins, addPin] = useState([]);
   return (
     <Router>
       <Switch>
@@ -26,7 +25,7 @@ function App() {
         url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEYTWO}&libraries=places`}
       >
       </script>
-      <MapContainer pins={pins} />
+      <MapContainer />
       </MuiThemeProvider>
       </Route>
       </Switch>

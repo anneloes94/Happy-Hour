@@ -12,6 +12,7 @@ import Geocode from "react-geocode";
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
+import toTimeString from "../helpers/toTimeString"
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -127,8 +128,8 @@ export class MapContainer extends Component {
     icon={barIcon}
     title={restaurant.name}
     name={restaurant.name}
-    start_time={restaurant.start_time}
-    end_time={restaurant.end_time}
+    start_time={toTimeString(restaurant.start_time)}
+    end_time={toTimeString(restaurant.end_time)}
     position={{ lat: restaurant.lat, lng: restaurant.lng }}/>
   )
 }
@@ -162,8 +163,8 @@ toggleShowFood = () => {
         icon={barIcon}
         title={restaurant.name}
         name={restaurant.name}
-        start_time={restaurant.start_time}
-        end_time={restaurant.end_time}
+        start_time={toTimeString(restaurant.start_time)}
+        end_time={toTimeString(restaurant.end_time)}
         position={{ lat: restaurant.lat, lng: restaurant.lng }}
         />)
       }
@@ -178,8 +179,8 @@ toggleShowFood = () => {
           icon={barIcon}
           title={restaurant.name}
           name={restaurant.name}
-          start_time={restaurant.start_time}
-          end_time={restaurant.end_time}
+          start_time={toTimeString(restaurant.start_time)}
+          end_time={toTimeString(restaurant.end_time)}
           position={{ lat: restaurant.lat, lng: restaurant.lng }}
         />)
       }

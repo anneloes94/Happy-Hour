@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import toTimeString from '../helpers/toTimeString'
 
 const useStyles = makeStyles({
   root: {
@@ -24,13 +25,11 @@ const useStyles = makeStyles({
 export default function OutlinedCard(props) {
   const classes = useStyles();
 
-  // const formattedTime = 
-
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {props.start_time} - {props.end_time}
+          {toTimeString(props.start_time)} - {toTimeString(props.end_time)}
         </Typography>
         <Typography variant="h5" component="h2">
           {props.name}

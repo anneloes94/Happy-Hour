@@ -191,7 +191,7 @@ toggleShowFood = () => {
   render() {
     return (
       <div >
-        {/* HOW TO PASS IN MAPCONTAINER STATE TO CURRENTLOCATION? */}
+        {/* Sibling 1 */}
         <CurrentLocation centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
           
           
@@ -222,8 +222,11 @@ toggleShowFood = () => {
             </div>
           </InfoWindow>
         </CurrentLocation>
+
+        {/* Sibling 2 */}
         <div style={{position: "absolute", top: "5em", right: "2em"}}>
-          <Search centerOnSearch={this.centerOnSearch} />
+          
+
           <FormGroup row>
             <Button variant="contained" color="primary" onClick={this.getBarCrawl}>
               Find my Bar Crawl!
@@ -231,7 +234,8 @@ toggleShowFood = () => {
             <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
             <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
           </FormGroup>
-        <div >
+
+          <div >
             {this.state.barCrawlRestaurants && this.state.barCrawlRestaurants.map(restaurant =>
               <BarCrawlInfo 
                 name={restaurant.name}
@@ -241,7 +245,13 @@ toggleShowFood = () => {
             )}
           </div>
         
-          </div>
+        </div >
+        {/* Sibling 3 */}
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+          <Search centerOnSearch={this.centerOnSearch} />
+        </div>
+
+
       </div>
     );
   }

@@ -130,7 +130,8 @@ export class MapContainer extends Component {
     name={restaurant.name}
     start_time={toTimeString(restaurant.start_time)}
     end_time={toTimeString(restaurant.end_time)}
-    position={{ lat: restaurant.lat, lng: restaurant.lng }}/>
+    position={{ lat: restaurant.lat, lng: restaurant.lng }}
+    />
   )
 }
 
@@ -217,6 +218,7 @@ toggleShowFood = () => {
                     <li>{weekDays[day]}</li>
                   ))}
               </ul>
+              {this.state.selectedPlace.position && <Button variant="outlined" href={`https://maps.google.com/maps?q=${this.state.selectedPlace.position.lat},${this.state.selectedPlace.position.lng}`} > Directions </Button>}
             </div>
           </InfoWindow>
         </CurrentLocation>

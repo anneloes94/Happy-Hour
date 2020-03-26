@@ -17,12 +17,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Logo from "./Photos/Logo2_white.svg";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    color: '#4c5f00'
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -51,6 +53,10 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  palette: {
+    primary: { main: '#7C8C03' },
+    secondary: { main: '#f2b705' }
+  }
 }));
 
 function ResponsiveDrawer(props) {
@@ -67,10 +73,10 @@ function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List>
+      <List  >
         {['Profile', 'Favourite places'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <PersonIcon /> : <FavoriteIcon />}</ListItemIcon>
+          <ListItem button key={text} className={classes.root} >
+            <ListItemIcon>{index % 2 === 0 ? <PersonIcon className={classes.root} /> : <FavoriteIcon className={classes.root} />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -78,9 +84,9 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {['About'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem className={classes.root} button key={text}>
             {/* NavItem Icons! */}
-            <ListItemIcon>{index % 2 === 0 ? <InfoIcon /> : <InfoIcon /> }</ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? <InfoIcon className={classes.root}/> : <InfoIcon className={classes.root}/> }</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -103,7 +109,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Happy Brauer
+            <img src={Logo} height="50EM" position="center"></img>
           </Typography>
         </Toolbar>
       </AppBar>

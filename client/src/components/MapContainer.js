@@ -193,7 +193,7 @@ toggleShowFood = () => {
       <div >
         {/* HOW TO PASS IN MAPCONTAINER STATE TO CURRENTLOCATION? */}
         <CurrentLocation centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
-          <Search centerOnSearch={this.centerOnSearch} />
+          
           
           <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <div className='form-check'>
@@ -223,6 +223,7 @@ toggleShowFood = () => {
           </InfoWindow>
         </CurrentLocation>
         <div style={{position: "absolute", top: "5em", right: "2em"}}>
+          <Search centerOnSearch={this.centerOnSearch} />
           <FormGroup row>
             <Button variant="contained" color="primary" onClick={this.getBarCrawl}>
               Find my Bar Crawl!

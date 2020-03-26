@@ -6,3 +6,9 @@
   margin-right: auto;
   width: 50%;
 }
+
+@media all and (max-device-width: 480px) {
+  .searchBar {
+    margin-bottom: 2EM
+  }
+}

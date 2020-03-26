@@ -13,6 +13,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
 import toTimeString from "../helpers/toTimeString"
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple'
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -76,6 +78,7 @@ export class MapContainer extends Component {
       showingInfoWindow: true
     });
   };
+
   onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -120,23 +123,23 @@ export class MapContainer extends Component {
       });
   };
 
- markersToBeRendered(props){
-  this.state.restaurants.map(restaurant => 
-    <Marker
-    key={restaurant.id}
-    date_available={restaurant.date_available}
-    icon={barIcon}
-    title={restaurant.name}
-    name={restaurant.name}
-    start_time={toTimeString(restaurant.start_time)}
-    end_time={toTimeString(restaurant.end_time)}
-    position={{ lat: restaurant.lat, lng: restaurant.lng }}
-    />
-  )
-}
+  markersToBeRendered(props){
+    this.state.restaurants.map(restaurant => 
+      <Marker
+      key={restaurant.id}
+      date_available={restaurant.date_available}
+      icon={barIcon}
+      title={restaurant.name}
+      name={restaurant.name}
+      start_time={toTimeString(restaurant.start_time)}
+      end_time={toTimeString(restaurant.end_time)}
+      position={{ lat: restaurant.lat, lng: restaurant.lng }}
+      />
+    )
+  }
 
 
-toggleShowFood = () => {
+  toggleShowFood = () => {
     this.setState(prev => {
       return {
         ...prev,
@@ -187,24 +190,22 @@ toggleShowFood = () => {
       }
   }
 
-
   render() {
     return (
-      <div >
+      <div>
         {/* Sibling 1 */}
-        <CurrentLocation centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
-          
+        <CurrentLocation color="primary" centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
           
           <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <div className='form-check'>
 
-          
           </div>
           {this.state.restaurants && this.showMarkers()}
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             onClose={this.onClose}
+            color="primary"
           >
             <div>
               <h4>{this.state.selectedPlace.name}</h4>
@@ -225,10 +226,8 @@ toggleShowFood = () => {
 
         {/* Sibling 2 */}
         <div style={{position: "absolute", top: "5em", right: "2em"}}>
-          
-
-          <FormGroup row>
-            <Button variant="contained" color="primary" onClick={this.getBarCrawl}>
+          <FormGroup row >
+            <Button onClick={this.getBarCrawl}>
               Find my Bar Crawl!
             </Button>
             <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
@@ -244,14 +243,12 @@ toggleShowFood = () => {
                 end_time={restaurant.end_time} />
             )}
           </div>
-        
         </div >
+
         {/* Sibling 3 */}
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
           <Search centerOnSearch={this.centerOnSearch} />
         </div>
-
-
       </div>
     );
   }

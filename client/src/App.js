@@ -7,9 +7,8 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 // import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import lime from '@material-ui/core/colors/lime'
-import red from '@material-ui/core/colors/red'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -44,11 +43,11 @@ function App() {
 
         <Route exact path="/map">
           <ThemeProvider theme={theme}>
-            <NavBar theme={theme} />
+            <NavBar />
             <script
               url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEYTWO}&libraries=places`}
             ></script>
-            <MapContainer theme={theme}/>
+            <MapContainer />
           </ThemeProvider>
         </Route>
       </Switch>

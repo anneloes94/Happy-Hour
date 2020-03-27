@@ -1,3 +1,19 @@
-.button {
-  height: 200px
+.stubbornButton {
+  background-color:#f2b705;
+  color: rgb(0, 0, 0);
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  /* font-weight: 400; */
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  padding: 1em;
+  text-transform: uppercase;
+    font-weight: 500;
+
+}
+
+.stubbornButton:hover {
+  background-color: #d89e00;
 }

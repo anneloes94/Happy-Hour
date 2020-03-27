@@ -12,6 +12,7 @@ import Geocode from "react-geocode";
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
+import "./Button.css"
 import toTimeString from "../helpers/toTimeString"
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple'
@@ -206,14 +207,15 @@ export class MapContainer extends Component {
             visible={this.state.showingInfoWindow}
             onClose={this.onClose}
             color="primary"
+            
           >
-            <div>
+            <div style={{textAlign: "center"}}>
               <h4>{this.state.selectedPlace.name}</h4>
               <h5>
                 {this.state.selectedPlace.start_time} -{" "}
                 {this.state.selectedPlace.end_time}
               </h5>
-              <ul>
+              <ul style={{listStyleType: "none", marginLeft: "0", paddingLeft: "0"}}>
                 {this.state.selectedPlace.date_available &&
                   this.state.selectedPlace.date_available.map(day => (
                     <li>{weekDays[day]}</li>
@@ -226,10 +228,10 @@ export class MapContainer extends Component {
 
         {/* Sibling 2 */}
         <div style={{position: "absolute", top: "5em", right: "2em"}}>
+          <button className="stubbornButton" onClick={this.getBarCrawl}>
+            Find my Bar Crawl!
+          </button>
           <FormGroup row >
-            <Button onClick={this.getBarCrawl}>
-              Find my Bar Crawl!
-            </Button>
             <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
             <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
           </FormGroup>

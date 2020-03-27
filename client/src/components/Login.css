@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 
+
+.container {
+  margin-top: 80px;
+  display: grid;
+  margin-right: 200px;
+}
 * {
   box-sizing: border-box;
 }
@@ -18,17 +24,18 @@ h1,h2,h3,h4,h5,h6,label,span {
 
 body, html, .App, #root, .auth-wrapper {
   width: 100%;
-  height: 100%;
+  height: 60%;
 }
 
 .navbar-light {
-  background-color: lightcoral;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  background-color: white;
+  /* box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2); */
 }
 
 .auth-wrapper {
-  display: flex;
-  justify-content: center;
+  margin-left: 80px;
+  /* display: flex; */
+  /* justify-content: center; */
   flex-direction: column;
   text-align: left;
 }
@@ -36,7 +43,7 @@ body, html, .App, #root, .auth-wrapper {
 .auth-inner {
   width: 450px;
   margin: auto;
-  background: #ffffff;
+  background: white;
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
@@ -44,7 +51,6 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .auth-wrapper .form-control:focus {
-  border-color: #167bff;
   box-shadow: none;
 }
 
@@ -64,12 +70,12 @@ body, html, .App, #root, .auth-wrapper {
   text-align: right;
   font-size: 13px;
   padding-top: 10px;
-  color: #7f7d7d;
+  color: white;
   margin: 0;
 }
 
 .forgot-password a {
-  color: #167bff;
+  color: #7C8C03;
 }
 
 /* @media all and (min-width: 480px) {

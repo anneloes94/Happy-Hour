@@ -6,7 +6,7 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
@@ -37,19 +37,19 @@ function App() {
   return (
     <Router>
       <Switch>
+      <ThemeProvider theme={theme}>
         <Route exact path="/">
           <Login />
         </Route>
 
         <Route exact path="/map">
-          <ThemeProvider theme={theme}>
             <NavBar />
             <script
               url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEYTWO}&libraries=places`}
             ></script>
             <MapContainer />
-          </ThemeProvider>
-        </Route>
+            </Route>
+            </ThemeProvider>
       </Switch>
     </Router>
   );

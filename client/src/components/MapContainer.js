@@ -12,7 +12,10 @@ import Geocode from "react-geocode";
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
+import "./Button.css"
 import toTimeString from "../helpers/toTimeString"
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple'
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -76,6 +79,7 @@ export class MapContainer extends Component {
       showingInfoWindow: true
     });
   };
+
   onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -120,23 +124,23 @@ export class MapContainer extends Component {
       });
   };
 
- markersToBeRendered(props){
-  this.state.restaurants.map(restaurant => 
-    <Marker
-    key={restaurant.id}
-    date_available={restaurant.date_available}
-    icon={barIcon}
-    title={restaurant.name}
-    name={restaurant.name}
-    start_time={toTimeString(restaurant.start_time)}
-    end_time={toTimeString(restaurant.end_time)}
-    position={{ lat: restaurant.lat, lng: restaurant.lng }}
-    />
-  )
-}
+  markersToBeRendered(props){
+    this.state.restaurants.map(restaurant => 
+      <Marker
+      key={restaurant.id}
+      date_available={restaurant.date_available}
+      icon={barIcon}
+      title={restaurant.name}
+      name={restaurant.name}
+      start_time={toTimeString(restaurant.start_time)}
+      end_time={toTimeString(restaurant.end_time)}
+      position={{ lat: restaurant.lat, lng: restaurant.lng }}
+      />
+    )
+  }
 
 
-toggleShowFood = () => {
+  toggleShowFood = () => {
     this.setState(prev => {
       return {
         ...prev,
@@ -187,32 +191,31 @@ toggleShowFood = () => {
       }
   }
 
-
   render() {
     return (
-      <div >
-        {/* HOW TO PASS IN MAPCONTAINER STATE TO CURRENTLOCATION? */}
-        <CurrentLocation centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
-          <Search centerOnSearch={this.centerOnSearch} />
+      <div>
+        {/* Sibling 1 */}
+        <CurrentLocation color="primary" centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
           
           <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <div className='form-check'>
 
-          
           </div>
           {this.state.restaurants && this.showMarkers()}
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             onClose={this.onClose}
+            color="primary"
+            
           >
-            <div>
+            <div style={{textAlign: "center"}}>
               <h4>{this.state.selectedPlace.name}</h4>
               <h5>
                 {this.state.selectedPlace.start_time} -{" "}
                 {this.state.selectedPlace.end_time}
               </h5>
-              <ul>
+              <ul style={{listStyleType: "none", marginLeft: "0", paddingLeft: "0"}}>
                 {this.state.selectedPlace.date_available &&
                   this.state.selectedPlace.date_available.map(day => (
                     <li>{weekDays[day]}</li>
@@ -222,15 +225,18 @@ toggleShowFood = () => {
             </div>
           </InfoWindow>
         </CurrentLocation>
+
+        {/* Sibling 2 */}
         <div style={{position: "absolute", top: "5em", right: "2em"}}>
-          <FormGroup row>
-            <Button variant="contained" color="primary" onClick={this.getBarCrawl}>
-              Find my Bar Crawl!
-            </Button>
+          <button className="stubbornButton" onClick={this.getBarCrawl}>
+            Find my Bar Crawl!
+          </button>
+          <FormGroup row >
             <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
             <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
           </FormGroup>
-        <div >
+
+          <div >
             {this.state.barCrawlRestaurants && this.state.barCrawlRestaurants.map(restaurant =>
               <BarCrawlInfo 
                 name={restaurant.name}
@@ -239,8 +245,12 @@ toggleShowFood = () => {
                 end_time={restaurant.end_time} />
             )}
           </div>
-        
-          </div>
+        </div >
+
+        {/* Sibling 3 */}
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+          <Search centerOnSearch={this.centerOnSearch} />
+        </div>
       </div>
     );
   }

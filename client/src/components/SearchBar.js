@@ -16,9 +16,6 @@ export default function Search(props) {
         componentRestrictions: {
           country: ["ca"]
         },
-        // location: props.currentLocation,
-        // radius: 1500,
-
       }} 
       onSelect={(searchedLocation) => props.centerOnSearch(searchedLocation)}
       placeholder={"Where to..?"} />

@@ -1,12 +1,10 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import "./Login.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Logo from "./Photos/Logo2_white.svg";
-
-const drawerWidth = 240;
 
 export default function Login() {
   const [redirect, setState] = useState(false);
@@ -28,7 +26,7 @@ export default function Login() {
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" noWrap>
-            <img src={Logo} height="50EM" position="center"></img>
+            <img src={Logo} height="50EM" position="center" alt="Happy Brauer logo"></img>
           </Typography>
         </Toolbar>
       </AppBar>

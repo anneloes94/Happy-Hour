@@ -1,5 +1,4 @@
 export default function toTimeString(timeString) {
-  // we have a string 15:12:11
   let hours = Number(timeString.split(":")[0])
   let minutes = Number(timeString.split(":")[1])
   let amOrPm = "" 

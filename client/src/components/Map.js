@@ -137,7 +137,6 @@ export class CurrentLocation extends React.Component {
           function(response, status) {
             if (status === "OK") {
               directionsRenderer.setDirections(response);
-              const route = response.routes[0];
             } else {
               window.alert("Directions request failed due to " + status);
             }

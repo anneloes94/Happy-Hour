@@ -1,14 +1,10 @@
 import React from "react";
 import MapContainer from "./components/MapContainer";
-
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
-// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 
 const theme = createMuiTheme({
   palette: {
@@ -25,9 +21,8 @@ const theme = createMuiTheme({
   overrides: {
     MuiButton: { // Name of the component ⚛️ / style sheet
         root: { // Name of the rule
-            backgroundColor: '#7C8C03', // Some CSS
+            backgroundColor: '#7C8C03', 
             color: "#fff",
-
         },
     },
 },
@@ -41,7 +36,6 @@ function App() {
         <Route exact path="/">
           <Login />
         </Route>
-
         <Route exact path="/map">
             <NavBar />
             <script

@@ -2,16 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-// import { usePromiseTracker } from "react-promise-tracker";
-
-// const LoadingIndicator = props => {
-//   const { promiseInProgress } = usePromiseTracker();
-
-//   return (
-//     promiseInProgress &&
-//     console.log("hello, in progress")
-//   )
-// }
 
 ReactDOM.render( <App />, document.getElementById("root"));
 

@@ -14,8 +14,6 @@ import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
 import "./Button.css"
 import toTimeString from "../helpers/toTimeString"
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple'
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -53,7 +51,6 @@ export class MapContainer extends Component {
   componentDidMount() {
     const customersData = axios.get("http://localhost:8080/api/customers");
     const restaurantsData = axios.get("http://localhost:8080/api/restaurants");
-    // trackPromise(
     Promise.all([customersData, restaurantsData])
       .then(all => {
         let r = [...all[1].data.restaurants];
@@ -96,7 +93,6 @@ export class MapContainer extends Component {
       const restaurantsArray = result.data.restaurants
       const filteredRestaurants = restaurantsArray.filter(restaurant => restaurant.distance <= 1.5 )
       const slicedFilteredRestaurants = filteredRestaurants.slice(0,3)
-
       this.setState(prev => {
         return {
           ...prev,
@@ -105,19 +101,13 @@ export class MapContainer extends Component {
       })
     })
     })
-
   }
 
   centerOnSearch = (props, e) => {
     Geocode.fromAddress(props.description)
       .then(response => {
-        console.log(props)
         const { lat, lng } = response.results[0].geometry.location;
         this.setState({currentLocation: {lat, lng}})
-        console.log(this.state.currentLocation)
-        console.log(lat, lng);
-        // this.props.map.panTo({lat, lng})
-        // ** Need this to be passed to CurrentLocation ONCE a change of selecting from Search is made **
       })
       .catch(error => {
         console.error(error);
@@ -138,7 +128,6 @@ export class MapContainer extends Component {
       />
     )
   }
-
 
   toggleShowFood = () => {
     this.setState(prev => {
@@ -196,18 +185,15 @@ export class MapContainer extends Component {
       <div>
         {/* Sibling 1 */}
         <CurrentLocation color="primary" centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
-          
           <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
           <div className='form-check'>
-
           </div>
           {this.state.restaurants && this.showMarkers()}
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             onClose={this.onClose}
-            color="primary"
-            
+            color="primary"       
           >
             <div style={{textAlign: "center"}}>
               <h4>{this.state.selectedPlace.name}</h4>
@@ -235,7 +221,6 @@ export class MapContainer extends Component {
             <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
             <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
           </FormGroup>
-
           <div >
             {this.state.barCrawlRestaurants && this.state.barCrawlRestaurants.map(restaurant =>
               <BarCrawlInfo 

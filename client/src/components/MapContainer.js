@@ -4,7 +4,8 @@ import React, { Component } from "react";
 import { GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import CurrentLocation from "./Map";
 import axios from "axios";
-import Checkbox from "./Checkbox";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
 import BarCrawlInfo from "./BarCrawlInfo";
@@ -251,15 +252,24 @@ export class MapContainer extends Component {
             Find my Bar Crawl!
           </button>
           <FormGroup row>
-            <Checkbox
-              label={"Food"}
-              checked={this.state.showFood}
-              onClick={this.toggleShowFood}
+            <FormControlLabel
+              control={
+                <Switch
+                  size="small"
+                  checked={this.state.showFood}
+                  onChange={this.toggleShowFood}
+                />
+              }
+              label="Food"
             />
-            <Checkbox
-              label={"Drink"}
-              checked={this.state.showDrink}
-              onClick={this.toggleShowDrink}
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.showDrink}
+                  onChange={this.toggleShowDrink}
+                />
+              }
+              label="Drink"
             />
           </FormGroup>
           <div>

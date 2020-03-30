@@ -1,61 +1,61 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import PersonIcon from '@material-ui/icons/Person';
-import InfoIcon from '@material-ui/icons/Info';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from "react";
+import PropTypes from "prop-types";
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import PersonIcon from "@material-ui/icons/Person";
+import InfoIcon from "@material-ui/icons/Info";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Logo from "./Photos/Logo2_white.svg";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    color: '#4c5f00'
+    display: "flex",
+    color: "#4c5f00"
   },
   drawer: {
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       width: drawerWidth,
-      flexShrink: 0,
-    },
+      flexShrink: 0
+    }
   },
   appBar: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
+      marginLeft: drawerWidth
+    }
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   },
   palette: {
-    primary: { main: '#7C8C03' },
-    secondary: { main: '#f2b705' }
+    primary: { main: "#7C8C03" },
+    secondary: { main: "#f2b705" }
   }
 }));
 
@@ -73,20 +73,32 @@ function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List  >
-        {['Profile', 'Favourite places'].map((text, index) => (
-          <ListItem button key={text} className={classes.root} >
-            <ListItemIcon>{index % 2 === 0 ? <PersonIcon className={classes.root} /> : <FavoriteIcon className={classes.root} />}</ListItemIcon>
+      <List>
+        {["Profile", "Favourite places"].map((text, index) => (
+          <ListItem button key={text} className={classes.root}>
+            <ListItemIcon>
+              {index % 2 === 0 ? (
+                <PersonIcon className={classes.root} />
+              ) : (
+                <FavoriteIcon className={classes.root} />
+              )}
+            </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['About'].map((text, index) => (
+        {["About"].map((text, index) => (
           <ListItem className={classes.root} button key={text}>
             {/* NavItem Icons! */}
-            <ListItemIcon>{index % 2 === 0 ? <InfoIcon className={classes.root}/> : <InfoIcon className={classes.root}/> }</ListItemIcon>
+            <ListItemIcon>
+              {index % 2 === 0 ? (
+                <InfoIcon className={classes.root} />
+              ) : (
+                <InfoIcon className={classes.root} />
+              )}
+            </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -109,7 +121,12 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            <img src={Logo} height="50EM" position="center" alt="Happy Brauer logo"></img>
+            <img
+              src={Logo}
+              height="50EM"
+              position="center"
+              alt="Happy Brauer logo"
+            ></img>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -118,14 +135,14 @@ function ResponsiveDrawer(props) {
           <Drawer
             container={container}
             variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true // Better open performance on mobile.
             }}
           >
             {drawer}
@@ -134,7 +151,7 @@ function ResponsiveDrawer(props) {
         <Hidden xsDown implementation="css">
           <Drawer
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             variant="permanent"
             open
@@ -143,12 +160,12 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      </div>
+    </div>
   );
 }
 
 ResponsiveDrawer.propTypes = {
-  container: PropTypes.any,
+  container: PropTypes.any
 };
 
 export default ResponsiveDrawer;

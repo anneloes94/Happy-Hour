@@ -5,22 +5,20 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
 
-module.exports = (db) => {
+module.exports = db => {
   router.get("/", (req, res) => {
     let query = `
-    SELECT * FROM restaurants INNER JOIN menus ON restaurants.id = menus.restaurant_id ORDER BY restaurants.start_time;`
+    SELECT * FROM restaurants INNER JOIN menus ON restaurants.id = menus.restaurant_id ORDER BY restaurants.start_time;`;
     db.query(query)
       .then(data => {
         const restaurants = data.rows;
         res.json({ restaurants });
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
   router.get("/distance", (req, res) => {
@@ -36,20 +34,16 @@ module.exports = (db) => {
     ) AS distance
   FROM restaurants
   ORDER BY start_time, distance
-  LIMIT 20;`
+  LIMIT 20;`;
     db.query(query, [43.644121, -79.402172, 43.644121])
       .then(data => {
         const restaurants = data.rows;
         res.json({ restaurants });
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
   return router;
 };
-
-

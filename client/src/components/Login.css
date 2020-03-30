@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
 
 .container {
   margin-top: 80px;
@@ -19,24 +19,24 @@
   margin-right: auto;
   margin-left: auto;
   display: flex;
-  background-color:#f2b705;
+  background-color: #f2b705;
   color: rgb(0, 0, 0);
   border-radius: 4px;
   border: none;
   font-size: 1rem;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: "Fira Sans", sans-serif;
   line-height: 1.5;
   letter-spacing: 0.00938em;
   padding: 0.5em;
   text-transform: uppercase;
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .submit-button:hover {
   background-color: #d89e00;
 }
 
-.sign-in{
+.sign-in {
   margin-right: auto;
   margin-left: auto;
 }
@@ -49,15 +49,26 @@ body {
   min-height: 100vh;
   display: flex;
   font-weight: 400;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: "Fira Sans", sans-serif;
 }
 
-h1,h2,h3,h4,h5,h6,label,span {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+span {
   font-weight: 500;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: "Fira Sans", sans-serif;
 }
 
-body, html, .App, #root, .auth-wrapper {
+body,
+html,
+.App,
+#root,
+.auth-wrapper {
   width: 100%;
   height: 60%;
 }
@@ -69,7 +80,7 @@ body, html, .App, #root, .auth-wrapper {
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .auth-wrapper .form-control:focus {
@@ -97,5 +108,5 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .forgot-password a {
-  color: #7C8C03;
+  color: #7c8c03;
 }

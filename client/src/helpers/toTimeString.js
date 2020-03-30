@@ -1,18 +1,18 @@
 export default function toTimeString(timeString) {
-  let hours = Number(timeString.split(":")[0])
-  let minutes = Number(timeString.split(":")[1])
-  let amOrPm = "" 
+  let hours = Number(timeString.split(":")[0]);
+  let minutes = Number(timeString.split(":")[1]);
+  let amOrPm = "";
 
   if (hours === 12) {
-    amOrPm = "PM"
+    amOrPm = "PM";
   } else if (hours < 12) {
-    amOrPm = "AM"
+    amOrPm = "AM";
   } else {
-    hours -= 12
-    amOrPm = "PM"
+    hours -= 12;
+    amOrPm = "PM";
   }
 
-  minutes = ("0" + minutes).slice(-2)
+  minutes = ("0" + minutes).slice(-2);
 
-  return `${hours}:${minutes} ${amOrPm}`
+  return `${hours}:${minutes} ${amOrPm}`;
 }

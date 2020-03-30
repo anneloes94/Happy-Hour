@@ -1,5 +1,5 @@
 .stubbornButton {
-  background-color:#f2b705;
+  background-color: #f2b705;
   color: rgb(0, 0, 0);
   border-radius: 4px;
   border: none;
@@ -9,8 +9,7 @@
   letter-spacing: 0.00938em;
   padding: 1em;
   text-transform: uppercase;
-    font-weight: 500;
-
+  font-weight: 500;
 }
 
 .stubbornButton:hover {

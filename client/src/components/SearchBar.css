@@ -10,6 +10,6 @@
 
 @media all and (max-device-width: 480px) {
   .searchBar {
-    margin-bottom: 2EM
+    margin-bottom: 2em;
   }
 }

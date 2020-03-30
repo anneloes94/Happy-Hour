@@ -7,13 +7,13 @@ import axios from "axios";
 import Checkbox from "./Checkbox";
 import barIcon from "./Photos/local_bar-24px.svg";
 import Search from "./SearchBar";
-import BarCrawlInfo from "./BarCrawlInfo"
+import BarCrawlInfo from "./BarCrawlInfo";
 import Geocode from "react-geocode";
-import FormGroup from '@material-ui/core/FormGroup';
-import Button from '@material-ui/core/Button';
-import "./Checkbox.css"
-import "./Button.css"
-import toTimeString from "../helpers/toTimeString"
+import FormGroup from "@material-ui/core/FormGroup";
+import Button from "@material-ui/core/Button";
+import "./Checkbox.css";
+import "./Button.css";
+import toTimeString from "../helpers/toTimeString";
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -88,71 +88,41 @@ export class MapContainer extends Component {
 
   getBarCrawl = () => {
     navigator.geolocation.getCurrentPosition(location => {
-      axios.get(`http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`)
-    .then(result => {
-      const restaurantsArray = result.data.restaurants
-      const filteredRestaurants = restaurantsArray.filter(restaurant => restaurant.distance <= 1.5 )
-      const slicedFilteredRestaurants = filteredRestaurants.slice(0,3)
-      this.setState(prev => {
-        return {
-          ...prev,
-          barCrawlRestaurants: slicedFilteredRestaurants
-        }
-      })
-    })
-    })
-  }
+      axios
+        .get(
+          `http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`
+        )
+        .then(result => {
+          const restaurantsArray = result.data.restaurants;
+          const filteredRestaurants = restaurantsArray.filter(
+            restaurant => restaurant.distance <= 1.5
+          );
+          const slicedFilteredRestaurants = filteredRestaurants.slice(0, 3);
+          this.setState(prev => {
+            return {
+              ...prev,
+              barCrawlRestaurants: slicedFilteredRestaurants
+            };
+          });
+        });
+    });
+  };
 
   centerOnSearch = (props, e) => {
     Geocode.fromAddress(props.description)
       .then(response => {
         const { lat, lng } = response.results[0].geometry.location;
-        this.setState({currentLocation: {lat, lng}})
+        this.setState({ currentLocation: { lat, lng } });
       })
       .catch(error => {
         console.error(error);
       });
   };
 
-  markersToBeRendered(props){
-    this.state.restaurants.map(restaurant => 
+  markersToBeRendered(props) {
+    this.state.restaurants.map(restaurant => (
       <Marker
-      key={restaurant.id}
-      date_available={restaurant.date_available}
-      icon={barIcon}
-      title={restaurant.name}
-      name={restaurant.name}
-      start_time={toTimeString(restaurant.start_time)}
-      end_time={toTimeString(restaurant.end_time)}
-      position={{ lat: restaurant.lat, lng: restaurant.lng }}
-      />
-    )
-  }
-
-  toggleShowFood = () => {
-    this.setState(prev => {
-      return {
-        ...prev,
-        showFood: !prev.showFood
-      }
-    })
-  }
-
-  toggleShowDrink = () => {
-    this.setState(prev => {
-      return {
-        ...prev,
-        showDrink: !prev.showDrink
-      }
-    })
-  }
-
-  showMarkers = () => {
-    if (this.state.showFood && this.state.showDrink) {
-      return this.state.restaurants.map(restaurant => 
-        <Marker
         key={restaurant.id}
-        onClick={this.onMarkerClick}
         date_available={restaurant.date_available}
         icon={barIcon}
         title={restaurant.name}
@@ -160,12 +130,31 @@ export class MapContainer extends Component {
         start_time={toTimeString(restaurant.start_time)}
         end_time={toTimeString(restaurant.end_time)}
         position={{ lat: restaurant.lat, lng: restaurant.lng }}
-        />)
-      }
-      else {
-        let filter = [];
-        filter = this.state.restaurants.filter(rest => rest.has_food === this.state.showFood && rest.has_drink === this.state.showDrink);
-        return filter.map(restaurant => 
+      />
+    ));
+  }
+
+  toggleShowFood = () => {
+    this.setState(prev => {
+      return {
+        ...prev,
+        showFood: !prev.showFood
+      };
+    });
+  };
+
+  toggleShowDrink = () => {
+    this.setState(prev => {
+      return {
+        ...prev,
+        showDrink: !prev.showDrink
+      };
+    });
+  };
+
+  showMarkers = () => {
+    if (this.state.showFood && this.state.showDrink) {
+      return this.state.restaurants.map(restaurant => (
         <Marker
           key={restaurant.id}
           onClick={this.onMarkerClick}
@@ -176,64 +165,124 @@ export class MapContainer extends Component {
           start_time={toTimeString(restaurant.start_time)}
           end_time={toTimeString(restaurant.end_time)}
           position={{ lat: restaurant.lat, lng: restaurant.lng }}
-        />)
-      }
-  }
+        />
+      ));
+    } else {
+      let filter = [];
+      filter = this.state.restaurants.filter(
+        rest =>
+          rest.has_food === this.state.showFood &&
+          rest.has_drink === this.state.showDrink
+      );
+      return filter.map(restaurant => (
+        <Marker
+          key={restaurant.id}
+          onClick={this.onMarkerClick}
+          date_available={restaurant.date_available}
+          icon={barIcon}
+          title={restaurant.name}
+          name={restaurant.name}
+          start_time={toTimeString(restaurant.start_time)}
+          end_time={toTimeString(restaurant.end_time)}
+          position={{ lat: restaurant.lat, lng: restaurant.lng }}
+        />
+      ));
+    }
+  };
 
   render() {
     return (
       <div>
         {/* Sibling 1 */}
-        <CurrentLocation color="primary" centerAroundCurrentLocation barCrawlRestaurants={this.state.barCrawlRestaurants} currentLocation={this.state.currentLocation} google={this.props.google}>
-          <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.state.currentLocation} />
-          <div className='form-check'>
-          </div>
+        <CurrentLocation
+          color="primary"
+          centerAroundCurrentLocation
+          barCrawlRestaurants={this.state.barCrawlRestaurants}
+          currentLocation={this.state.currentLocation}
+          google={this.props.google}
+        >
+          <Marker
+            onClick={this.onMarkerClick}
+            name={"Current location"}
+            position={this.state.currentLocation}
+          />
+          <div className="form-check"></div>
           {this.state.restaurants && this.showMarkers()}
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             onClose={this.onClose}
-            color="primary"       
+            color="primary"
           >
-            <div style={{textAlign: "center"}}>
+            <div style={{ textAlign: "center" }}>
               <h4>{this.state.selectedPlace.name}</h4>
               <h5>
                 {this.state.selectedPlace.start_time} -{" "}
                 {this.state.selectedPlace.end_time}
               </h5>
-              <ul style={{listStyleType: "none", marginLeft: "0", paddingLeft: "0"}}>
+              <ul
+                style={{
+                  listStyleType: "none",
+                  marginLeft: "0",
+                  paddingLeft: "0"
+                }}
+              >
                 {this.state.selectedPlace.date_available &&
                   this.state.selectedPlace.date_available.map(day => (
                     <li>{weekDays[day]}</li>
                   ))}
               </ul>
-              {this.state.selectedPlace.position && <Button variant="outlined" href={`https://maps.google.com/maps?q=${this.state.selectedPlace.position.lat},${this.state.selectedPlace.position.lng}`} > Directions </Button>}
+              {this.state.selectedPlace.position && (
+                <Button
+                  variant="outlined"
+                  href={`https://maps.google.com/maps?q=${this.state.selectedPlace.position.lat},${this.state.selectedPlace.position.lng}`}
+                >
+                  {" "}
+                  Directions{" "}
+                </Button>
+              )}
             </div>
           </InfoWindow>
         </CurrentLocation>
 
         {/* Sibling 2 */}
-        <div style={{position: "absolute", top: "5em", right: "2em"}}>
+        <div style={{ position: "absolute", top: "5em", right: "2em" }}>
           <button className="stubbornButton" onClick={this.getBarCrawl}>
             Find my Bar Crawl!
           </button>
-          <FormGroup row >
-            <Checkbox label={"Food"} checked={this.state.showFood} onClick={this.toggleShowFood} />
-            <Checkbox label={"Drink"} checked={this.state.showDrink} onClick={this.toggleShowDrink} />
+          <FormGroup row>
+            <Checkbox
+              label={"Food"}
+              checked={this.state.showFood}
+              onClick={this.toggleShowFood}
+            />
+            <Checkbox
+              label={"Drink"}
+              checked={this.state.showDrink}
+              onClick={this.toggleShowDrink}
+            />
           </FormGroup>
-          <div >
-            {this.state.barCrawlRestaurants && this.state.barCrawlRestaurants.map(restaurant =>
-              <BarCrawlInfo 
-                name={restaurant.name}
-                address={restaurant.address}
-                start_time={restaurant.start_time}
-                end_time={restaurant.end_time} />
-            )}
+          <div>
+            {this.state.barCrawlRestaurants &&
+              this.state.barCrawlRestaurants.map(restaurant => (
+                <BarCrawlInfo
+                  name={restaurant.name}
+                  address={restaurant.address}
+                  start_time={restaurant.start_time}
+                  end_time={restaurant.end_time}
+                />
+              ))}
           </div>
-        </div >
+        </div>
 
         {/* Sibling 3 */}
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
           <Search centerOnSearch={this.centerOnSearch} />
         </div>
       </div>

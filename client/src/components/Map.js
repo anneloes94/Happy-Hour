@@ -64,11 +64,8 @@ export class CurrentLocation extends React.Component {
       // checks if google is available
       const { google } = this.props;
       const maps = google.maps;
-
       const mapRef = this.refs.map;
-
       // reference to the actual DOM element
-      // Important!
       const node = ReactDOM.findDOMNode(mapRef);
 
       let { zoom } = this.props;
@@ -141,7 +138,6 @@ export class CurrentLocation extends React.Component {
             if (status === "OK") {
               directionsRenderer.setDirections(response);
               const route = response.routes[0];
-              console.log(route);
             } else {
               window.alert("Directions request failed due to " + status);
             }

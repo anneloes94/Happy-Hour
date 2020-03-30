@@ -14,8 +14,6 @@ import Button from '@material-ui/core/Button';
 import "./Checkbox.css"
 import "./Button.css"
 import toTimeString from "../helpers/toTimeString"
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple'
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -111,12 +109,8 @@ export class MapContainer extends Component {
   centerOnSearch = (props, e) => {
     Geocode.fromAddress(props.description)
       .then(response => {
-        console.log(props)
         const { lat, lng } = response.results[0].geometry.location;
         this.setState({currentLocation: {lat, lng}})
-        console.log(this.state.currentLocation)
-        console.log(lat, lng);
-        // this.props.map.panTo({lat, lng})
         // ** Need this to be passed to CurrentLocation ONCE a change of selecting from Search is made **
       })
       .catch(error => {

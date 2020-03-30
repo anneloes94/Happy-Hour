@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import "./Checkbox.css";
 import "./Button.css";
 import toTimeString from "../helpers/toTimeString";
+import currentTime from "../helpers/currentTime.js"
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -95,8 +96,9 @@ export class MapContainer extends Component {
         )
         .then(result => {
           const restaurantsArray = result.data.restaurants;
+          const currTime = currentTime()
           const filteredRestaurants = restaurantsArray.filter(
-            restaurant => restaurant.distance <= 1.5
+            restaurant => restaurant.distance <= 1.5 && restaurant.end_time > currTime
           );
           const slicedFilteredRestaurants = filteredRestaurants.slice(0, 3);
           this.setState(prev => {

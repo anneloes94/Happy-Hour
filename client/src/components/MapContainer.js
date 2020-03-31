@@ -96,7 +96,7 @@ export class MapContainer extends Component {
         )
         .then(result => {
           const restaurantsArray = result.data.restaurants;
-          const currTime = currentTime()
+          const currTime = "17:00"
           const filteredRestaurants = restaurantsArray.filter(
             restaurant => restaurant.distance <= 1.5 && restaurant.end_time > currTime
           );

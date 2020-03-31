@@ -33,7 +33,7 @@ module.exports = db => {
       )
     ) AS distance
   FROM restaurants
-  ORDER BY start_time, distance
+  ORDER BY start_time, end_time, distance
   LIMIT 20;`;
     db.query(query, [43.644121, -79.402172, 43.644121])
       .then(data => {

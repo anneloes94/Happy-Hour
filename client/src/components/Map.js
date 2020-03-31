@@ -33,7 +33,6 @@ export class CurrentLocation extends React.Component {
     const google = this.props.google;
     const maps = google.maps;
     if (map) {
-      console.log(current)
       let center = new maps.LatLng(current.lat, current.lng);
       map.panTo(center);
     }

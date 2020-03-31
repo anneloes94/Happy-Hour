@@ -30,6 +30,8 @@ const weekDays = {
   7: "Sunday"
 };
 
+
+
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
   // on componentLoad load data into state
@@ -53,13 +55,20 @@ export class MapContainer extends Component {
   componentDidMount() {
     const customersData = axios.get("http://localhost:8080/api/customers");
     const restaurantsData = axios.get("http://localhost:8080/api/restaurants");
+    let navLat;
+    let navLng;
+    navigator.geolocation.getCurrentPosition(location => {
+      navLat = location.coords.latitude;
+      navLng = location.coords.longitude;
+    })
     Promise.all([customersData, restaurantsData])
       .then(all => {
-        let r = [...all[1].data.restaurants];
+        let restrs = [...all[1].data.restaurants];
         this.setState(prev => {
           return {
             ...prev,
-            restaurants: r
+            currentLocation: {lat: navLat, lng: navLng},
+            restaurants: restrs
           };
         });
       })
@@ -91,10 +100,10 @@ export class MapContainer extends Component {
   getBarCrawl = () => {
     navigator.geolocation.getCurrentPosition(location => {
       axios
-        .get(`http://localhost:8080/api/restaurants/distance?lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+        .get(`http://localhost:8080/api/restaurants/distance?lat=${this.state.currentLocation.lat}&lng=${this.state.currentLocation.lng}`)
         .then(result => {
           const restaurantsArray = result.data.restaurants;
-          const currTime = "15:00"
+          const currTime = currentTime()
           const filteredRestaurants = restaurantsArray.filter(
             restaurant => restaurant.distance <= 35 && restaurant.end_time > currTime
           );

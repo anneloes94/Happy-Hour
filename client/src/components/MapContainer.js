@@ -181,8 +181,8 @@ export class MapContainer extends Component {
       let filter = [];
       filter = this.state.restaurants.filter(
         rest =>
-          rest.has_food === this.state.showFood &&
-          rest.has_drink === this.state.showDrink
+          rest.has_food === this.state.showFood 
+          // rest.has_drink === this.state.showDrink
       );
       return filter.map(restaurant => (
         <Marker

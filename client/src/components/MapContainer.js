@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import "./Checkbox.css";
 import "./Button.css";
 import toTimeString from "../helpers/toTimeString";
+import currentTime from "../helpers/currentTime.js"
 
 Geocode.setApiKey(`${process.env.REACT_APP_GOOGLE_API_KEY}`);
 Geocode.setRegion("ca");
@@ -28,6 +29,8 @@ const weekDays = {
   6: "Saturday",
   7: "Sunday"
 };
+
+
 
 export class MapContainer extends Component {
   // [...] RETRIEVES DATA FROM THE API DATABASE
@@ -52,13 +55,20 @@ export class MapContainer extends Component {
   componentDidMount() {
     const customersData = axios.get("http://localhost:8080/api/customers");
     const restaurantsData = axios.get("http://localhost:8080/api/restaurants");
+    let navLat;
+    let navLng;
+    navigator.geolocation.getCurrentPosition(location => {
+      navLat = location.coords.latitude;
+      navLng = location.coords.longitude;
+    })
     Promise.all([customersData, restaurantsData])
       .then(all => {
-        let r = [...all[1].data.restaurants];
+        let restrs = [...all[1].data.restaurants];
         this.setState(prev => {
           return {
             ...prev,
-            restaurants: r
+            currentLocation: {lat: navLat, lng: navLng},
+            restaurants: restrs
           };
         });
       })
@@ -90,13 +100,12 @@ export class MapContainer extends Component {
   getBarCrawl = () => {
     navigator.geolocation.getCurrentPosition(location => {
       axios
-        .get(
-          `http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`
-        )
+        .get(`http://localhost:8080/api/restaurants/distance?lat=${this.state.currentLocation.lat}&lng=${this.state.currentLocation.lng}`)
         .then(result => {
           const restaurantsArray = result.data.restaurants;
+          const currTime = currentTime()
           const filteredRestaurants = restaurantsArray.filter(
-            restaurant => restaurant.distance <= 1.5
+            restaurant => restaurant.distance <= 35 && restaurant.end_time > currTime
           );
           const slicedFilteredRestaurants = filteredRestaurants.slice(0, 3);
           this.setState(prev => {

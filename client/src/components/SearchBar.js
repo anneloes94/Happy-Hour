@@ -18,6 +18,9 @@ export default function Search(props) {
         }}
         onSelect={searchedLocation => props.centerOnSearch(searchedLocation)}
         placeholder={"Where to..?"}
+        inputStyle={{borderRadius: "10px"}}
+        suggestionsStyles={{container: {borderRadius: "10px"}}}
+
       />
     </div>
   );

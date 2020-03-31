@@ -33,9 +33,9 @@ module.exports = db => {
       )
     ) AS distance
   FROM restaurants
-  ORDER BY start_time, distance
+  ORDER BY start_time, distance, end_time
   LIMIT 20;`;
-    db.query(query, [43.644121, -79.402172, 43.644121])
+    db.query(query, [req.query.lat, req.query.lng, req.query.lat])
       .then(data => {
         const restaurants = data.rows;
         res.json({ restaurants });

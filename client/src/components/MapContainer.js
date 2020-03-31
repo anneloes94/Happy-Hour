@@ -91,14 +91,12 @@ export class MapContainer extends Component {
   getBarCrawl = () => {
     navigator.geolocation.getCurrentPosition(location => {
       axios
-        .get(
-          `http://localhost:8080/api/restaurants/distance?lat=${location.latitude}&lng=${location.longitude}`
-        )
+        .get(`http://localhost:8080/api/restaurants/distance?lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
         .then(result => {
           const restaurantsArray = result.data.restaurants;
-          const currTime = "17:00"
+          const currTime = "15:00"
           const filteredRestaurants = restaurantsArray.filter(
-            restaurant => restaurant.distance <= 1.5 && restaurant.end_time > currTime
+            restaurant => restaurant.distance <= 35 && restaurant.end_time > currTime
           );
           const slicedFilteredRestaurants = filteredRestaurants.slice(0, 3);
           this.setState(prev => {

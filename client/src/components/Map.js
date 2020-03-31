@@ -23,10 +23,10 @@ export class CurrentLocation extends React.Component {
 
   recenterMap() {
     let current;
-    if (this.state.currentLocation) {
-      current = this.state.currentLocation;
-    } else {
+    if (this.props.currentLocation) {
       current = this.props.currentLocation;
+    } else {
+      current = this.state.currentLocation;
     }
     const map = this.map;
 

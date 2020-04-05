@@ -29,8 +29,8 @@ Make a route for a bar crawl, based on current time and location.
 ## Setup
 
 1. Run `npm install` in `./client` and `./server` directories to install dependencies
-2. Create db tables by copying content of `./server/db/schema` files into postgresql server
-3. Create db seeds by copying content of `./server/db/seeds` files into postgresql serveryml`
+2. Create db tables by copying schemas in `./server/db/schema` files into postgresql server
+3. Create db seeds by copying seeds in `./server/db/seeds` files into postgresql server
 4. Run `bin/rake db:reset` to create, load and seed db
 5. Create an API key for Maps JavaScript, Places, Directions and Geocoding (see [Google's documentation](https://developers.google.com/maps/documentation/javascript/get-api-key))
 6. Create .env file for `./server` and `./client` (requires the API key) based on .env.example

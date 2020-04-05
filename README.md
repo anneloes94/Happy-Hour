@@ -10,4 +10,7 @@ In Happy Brauer, once logged in a user will be redirected to the map with happy 
 # Final Product
 
 !["Screenshot of Login Page"](docs/Login1.png)
-!["Screenshot of Current Location"] (docs/CurrentLocation2.png)
+!["Screenshot of Current Location"](docs/CurrentLocation2.png)
+!["Screenshot of custom marker"](docs/Marker3.png)
+!["Screenshot of food toggle"](docs/FoodToggle4.png)
+!["Screenshot of bar crawl"](docs/BarCrawlFeature5.png)

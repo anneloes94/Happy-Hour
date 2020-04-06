@@ -73,4 +73,4 @@ The page will reload if you make edits.<br />
 
 # Contributors
 
-Feel free to get in touch with @cassandralin and @anneloes94 about this project!
+Feel free to get in touch with [@cassandralin](https://github.com/cassandralin) and [@anneloes94](https://github.com/anneloes94) about this project!

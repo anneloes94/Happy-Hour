@@ -63,3 +63,14 @@ Runs the Node.js backend server in the development mode.<br />
 Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 The page will reload if you make edits.<br />
+
+# Future goals
+
+* Giving a “business owner” role to users --> only business owners can add their happy hours to the map. This will make the app more scalable and the database more reliable.
+* Making the map elements more responsive.
+* Using Google Places API to add information about a restaurant or bar's atmosphere to enhance the user experience (type of music played, busy times, etc.).
+
+
+# Contributors
+
+Feel free to get in touch with @cassandralin and @anneloes94 about this project!

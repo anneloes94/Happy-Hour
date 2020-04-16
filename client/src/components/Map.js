@@ -25,7 +25,7 @@ export class CurrentLocation extends React.Component {
     let current;
     if (this.props.currentLocation) {
       current = this.props.currentLocation;
-    } else {
+    } if (this.state.currentLocation) {
       current = this.state.currentLocation;
     }
     const map = this.map;
@@ -50,7 +50,7 @@ export class CurrentLocation extends React.Component {
                 lng: coords.longitude
               }
             },
-            this.recenterMap
+            this.recenterMap()
           );
         });
       }
